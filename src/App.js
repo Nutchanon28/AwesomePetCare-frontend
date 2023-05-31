@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout";
+import Login from "./components/Login";
+import PersistLogin from "./components/PersistLogin";
+
+const ROLES = {
+    User: 2001,
+    Admin: 5150,
+};
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <Routes>
+            <Route element={<Layout />}>
+                <Route index element={<Login />} />
+
+                <Route element={<PersistLogin />}>
+
+                </Route>
+            </Route>
+        </Routes>
+    );
 }
 
 export default App;
