@@ -1,9 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import "../../css/profile/Profile.css";
 
 const Profile = () => {
     const [name, setName] = useState("");
     const [username, setUsername] = useState("");
+    const axiosPrivate = useAxiosPrivate();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const effectRan = useRef(false);
+
+    useEffect(() => {
+        let isMounted = true;
+        const controller = new AbortController();
+
+        const getProfile = async () => {
+            try {
+                const response = await axiosPrivate.get("/profile", {
+                    signal: controller.signal,
+                });
+                console.log(response.data);
+            } catch (error) {
+                console.log(error);
+                if (
+                    effectRan.current ||
+                    process.env.NODE_ENV !== "development"
+                ) {
+                    navigate("/login", {
+                        state: { from: location },
+                        replace: true,
+                    });
+                }
+            }
+        };
+
+        getProfile();
+
+        return () => {
+            console.log("Aborted");
+            isMounted = false;
+            controller.abort();
+        };
+    }, []);
 
     return (
         <>
