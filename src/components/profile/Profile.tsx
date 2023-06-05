@@ -21,6 +21,8 @@ const Profile = () => {
                     signal: controller.signal,
                 });
                 console.log(response.data);
+                isMounted && setUsername(response?.data?.user?.username ?? "");
+                isMounted && setName(response?.data?.user?.name ?? "");
             } catch (error) {
                 console.log(error);
                 if (
@@ -41,8 +43,22 @@ const Profile = () => {
             console.log("Aborted");
             isMounted = false;
             controller.abort();
+            setUsername("");
+            setName("");
         };
     }, []);
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        try {
+            const response = await axiosPrivate.put("/profile", {
+                name,
+            });
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <>
@@ -51,7 +67,7 @@ const Profile = () => {
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCL2oUzmENq2Uq4aakeX-IODtfyH2VOU6R4A&usqp=CAU"
                     alt="avatar"
                 />
-                <div className="userInfo">
+                <form className="userForm" onSubmit={handleSubmit}>
                     <label htmlFor="name">name</label>
                     <input
                         required
@@ -74,7 +90,8 @@ const Profile = () => {
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
-                </div>
+                    <button type="submit">save</button>
+                </form>
             </div>
             <ul>
                 <li>Pet#1</li>
