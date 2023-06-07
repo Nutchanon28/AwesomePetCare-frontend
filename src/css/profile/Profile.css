@@ -12,10 +12,16 @@
     margin-right: 2.5rem;
 }
 
+.profileIcon {
+    align-self: flex-start;
+    margin: 1rem;
+}
+
+.userInfo,
 .userForm {
     display: flex;
     flex-direction: column;
-    width: 45%
+    width: 40%;
 }
 
 .userForm input {
@@ -34,3 +40,6 @@
     align-self: flex-end;
 }
 
+.profileIcon:hover, .userForm button:hover {
+    cursor: pointer;
+}
