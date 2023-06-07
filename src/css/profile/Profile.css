@@ -6,10 +6,14 @@
     align-items: center;
 }
 
-.profile img {
+.avatarForm {
     width: 20%;
-    border-radius: 50%;
     margin-right: 2.5rem;
+}
+
+.avatarForm img {
+    width: 100%;
+    border-radius: 50%;
 }
 
 .profileIcon {
@@ -40,6 +44,12 @@
     align-self: flex-end;
 }
 
-.profileIcon:hover, .userForm button:hover {
+.profileIcon:hover, button, .avatarForm img:hover {
     cursor: pointer;
+}
+
+.petSection {
+    display: flex;
+    width: 100%;
+    margin: 2rem;
 }
