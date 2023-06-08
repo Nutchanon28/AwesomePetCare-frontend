@@ -11,6 +11,7 @@ const Profile = () => {
     const [name, setName] = useState("");
     const [username, setUsername] = useState("");
     const [avatarPath, setAvatarPath] = useState("");
+    const [pets, setPets] = useState([]);
 
     const [isEditing, setIsEditing] = useState(false);
     const [isChangingAvatar, setIsChangingAvatar] = useState(false);
@@ -31,15 +32,22 @@ const Profile = () => {
                 const response = await axiosPrivate.get("/profile", {
                     signal: controller.signal,
                 });
+                const petResponse = await axiosPrivate.get("/pet", {
+                    signal: controller.signal,
+                });
                 console.log(response.data);
-                isMounted && setUsername(response?.data?.user?.username ?? "");
-                isMounted && setName(response?.data?.user?.name ?? "");
-                isMounted &&
+                console.log(petResponse.data);
+                if (isMounted) {
+                    setUsername(response?.data?.user?.username ?? "");
+                    setName(response?.data?.user?.name ?? "");
+
                     setAvatarPath(
                         response?.data?.user?.avatarFileKey
                             ? `http://localhost:3500/images/${response?.data?.user?.avatarFileKey}`
                             : ""
                     );
+                    setPets(petResponse?.data ?? []);
+                }
             } catch (error) {
                 console.log(error);
                 if (
@@ -62,6 +70,7 @@ const Profile = () => {
             controller.abort();
             setUsername("");
             setName("");
+            setAvatarPath("");
         };
     }, []);
 
@@ -161,7 +170,7 @@ const Profile = () => {
                 />
             </div>
             <div className="petSection">
-                <PetList />
+                <PetList pets={pets}/>
                 <PetDetail />
             </div>
         </>
