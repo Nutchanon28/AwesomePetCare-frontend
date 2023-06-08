@@ -7,6 +7,17 @@ import { FaEdit } from "react-icons/fa";
 import PetList from "./PetList";
 import PetDetail from "./PetDetail";
 
+interface IPet {
+    ownerId: string;
+    name: string;
+    type: string;
+    breed: string;
+    foodAllergies: string;
+    congenitalDisease: string;
+    image: string;
+    description?: string;
+}
+
 const Profile = () => {
     const [name, setName] = useState("");
     const [username, setUsername] = useState("");
@@ -15,6 +26,7 @@ const Profile = () => {
 
     const [isEditing, setIsEditing] = useState(false);
     const [isChangingAvatar, setIsChangingAvatar] = useState(false);
+    const [selectedPet, setSelectedPet] = useState<IPet | null>(null);
     const [avatar, setAvatar] = useState<File | null>(null);
     const hiddenImageInputRef = useRef<HTMLInputElement>(null);
 
@@ -170,8 +182,8 @@ const Profile = () => {
                 />
             </div>
             <div className="petSection">
-                <PetList pets={pets}/>
-                <PetDetail />
+                <PetList pets={pets} setSelectedPet={setSelectedPet}/>
+                <PetDetail pet={selectedPet}/>
             </div>
         </>
     );
