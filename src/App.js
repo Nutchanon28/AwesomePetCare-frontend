@@ -6,6 +6,7 @@ import Profile from "./components/profile/Profile";
 import Logout from "./components/Logout";
 import PersistLogin from "./components/PersistLogin";
 import RequireAuth from "./components/RequireAuth";
+import "./css/Global.css";
 
 const ROLES = {
     User: 2001,

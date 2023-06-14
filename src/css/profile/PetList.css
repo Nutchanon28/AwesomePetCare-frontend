@@ -1,14 +1,19 @@
 .petList {
     display: flex;
     flex-direction: column;
-    width: 40%;
+    width: 30%;
 }
 
 .pet {
     display: flex;
-    margin: 0.4rem 0;
+    margin: 0.6rem 0;
     width: 100%;
     align-items: center;
+    border-bottom: 0.1rem solid #333;
+}
+
+.pet:hover {
+    cursor: pointer;
 }
 
 .pet img{

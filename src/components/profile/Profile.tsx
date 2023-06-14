@@ -181,9 +181,10 @@ const Profile = () => {
                     onClick={() => setIsEditing(!isEditing)}
                 />
             </div>
+            <div className="profileSeperationLine"></div>
             <div className="petSection">
-                <PetList pets={pets} setSelectedPet={setSelectedPet}/>
-                <PetDetail pet={selectedPet}/>
+                <PetList pets={pets} setSelectedPet={setSelectedPet} />
+                <PetDetail pet={selectedPet} />
             </div>
         </>
     );

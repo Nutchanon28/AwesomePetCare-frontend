@@ -1,13 +1,25 @@
 .petDetail {
     display: flex;
     flex-direction: column;
-    width: 60%;
+    width: 65%;
+    background-color: #F5F5DC;
+    padding: 0 2rem 4rem 2rem;
+}
+
+
+.plusIcon {
+    align-self: flex-end;
+    margin: 2rem 1rem 1rem 0;
+}
+
+.plusIcon:hover {
+    cursor: pointer;
 }
 
 .petHeader {
     display: flex;
     width: 100%;
-    margin-bottom: 2rem;
+    margin: 2rem 0;
 }
 
 .petHeader img {
