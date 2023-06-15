@@ -3,6 +3,7 @@ import Layout from "./components/Layout";
 import Login from "./components/Login";
 import Home from "./components/home/Home";
 import Profile from "./components/profile/Profile";
+import AddPet from "./components/addPet/AddPet";
 import Logout from "./components/Logout";
 import PersistLogin from "./components/PersistLogin";
 import RequireAuth from "./components/RequireAuth";
@@ -25,6 +26,9 @@ function App() {
                     </Route>
                     <Route element={<RequireAuth allowedRoles={[ROLES.User]}/>}>
                         <Route path="/profile" element={<Profile />} />
+                    </Route>
+                    <Route element={<RequireAuth allowedRoles={[ROLES.User]}/>}>
+                        <Route path="/add_pet" element={<AddPet />} />
                     </Route>
                     <Route element={<RequireAuth allowedRoles={[ROLES.User]}/>}>
                         <Route path="/logout" element={<Logout />} />

@@ -1,0 +1,21 @@
+.addPetForm {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+}
+
+.addPetForm label {
+    margin-top: 1rem;
+}
+
+.addPetForm input {
+    font-size: 16px;
+    padding: 8px 4px;
+    margin-top: 0.5rem;
+}
+
+.addPetForm button {
+    margin-top: 2rem;
+    width: 10%;
+    align-self: center;
+}

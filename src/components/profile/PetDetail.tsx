@@ -1,5 +1,6 @@
 import React from "react";
 import { FaPlus } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import "../../css/profile/PetDetail.css";
 
 interface IPet {
@@ -18,7 +19,9 @@ interface IPet {
 const PetDetail = ({ pet }: IPet) => {
     return (
         <div className="petDetail">
-            <FaPlus style={{ color: "#333" }} className="plusIcon"/>
+            <Link to="/add_pet" className="plusIcon">
+                <FaPlus style={{ color: "#333" }} />
+            </Link>
             {pet != null ? (
                 <>
                     <div className="petHeader">
