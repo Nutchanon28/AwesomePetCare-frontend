@@ -4,6 +4,7 @@ import Login from "./components/Login";
 import Home from "./components/home/Home";
 import Profile from "./components/profile/Profile";
 import AddPet from "./components/addPet/AddPet";
+import AddPetTest from "./components/addPet/AddPetTest";
 import Logout from "./components/Logout";
 import PersistLogin from "./components/PersistLogin";
 import RequireAuth from "./components/RequireAuth";
@@ -28,7 +29,7 @@ function App() {
                         <Route path="/profile" element={<Profile />} />
                     </Route>
                     <Route element={<RequireAuth allowedRoles={[ROLES.User]}/>}>
-                        <Route path="/add_pet" element={<AddPet />} />
+                        <Route path="/add_pet" element={<AddPetTest />} />
                     </Route>
                     <Route element={<RequireAuth allowedRoles={[ROLES.User]}/>}>
                         <Route path="/logout" element={<Logout />} />

@@ -2,19 +2,32 @@
     display: flex;
     flex-direction: column;
     padding: 2rem;
+    align-items: center;
 }
 
-.addPetForm label {
+.addPetFormContainer {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+}
+
+.addPetFormContainer label {
     margin-top: 1rem;
 }
 
-.addPetForm input {
+.addPetFormContainer input {
     font-size: 16px;
     padding: 8px 4px;
     margin-top: 0.5rem;
+    width: 100%;
 }
 
-.addPetForm button {
+.addPetFormContainer .characterCounter {
+    align-self: self-end;
+    margin: 0.4rem 0 0 0;
+}
+
+.addPetFormContainer button {
     margin-top: 2rem;
     width: 10%;
     align-self: center;
