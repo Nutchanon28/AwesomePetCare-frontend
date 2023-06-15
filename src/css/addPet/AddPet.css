@@ -27,6 +27,16 @@
     margin: 0.4rem 0 0 0;
 }
 
+.addPetFormContainer .petImage {
+    width: 40%;
+    align-self: center;
+    border-radius: 50%;
+}
+
+.addPetFormContainer .petImage:hover {
+    cursor: pointer;
+}
+
 .addPetFormContainer button {
     margin-top: 2rem;
     width: 10%;
