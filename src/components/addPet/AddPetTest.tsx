@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { SubmitHandler, useForm } from "react-hook-form";
 import "../../css/addPet/AddPet.css";
+import { useNavigate } from "react-router-dom";
 
 interface IPetInput {
     name: string;
@@ -24,6 +25,7 @@ const AddPetTest = () => {
     const [imagePath, setImagePath] = useState("");
     const addImageLink =
         "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/OOjs_UI_icon_add.svg/1200px-OOjs_UI_icon_add.svg.png";
+    const navigate = useNavigate();
 
     const onSubmit: SubmitHandler<IPetInput> = async (data) => {
         console.log(data);
@@ -40,6 +42,7 @@ const AddPetTest = () => {
                 headers: { "Content-Type": "multipart/form-data" },
             });
             console.log(response);
+            navigate("/profile", { replace: true });
         } catch (error) {
             console.log(error);
         }

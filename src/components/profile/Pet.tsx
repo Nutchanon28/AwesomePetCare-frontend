@@ -24,7 +24,7 @@ const Pet = ({ pet, setSelectedPet }: PetProps) => {
                 console.log(pet);
             }}
         >
-            <img src={pet.image} alt={pet.name} />
+            <img src={`http://localhost:3500/images/${pet.image}`} alt={pet.name} />
             <div>
                 <h4>{pet.name}</h4>
                 <p>{`${pet.type} (${pet.breed})`}</p>

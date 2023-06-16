@@ -25,7 +25,7 @@ const PetDetail = ({ pet }: IPet) => {
             {pet != null ? (
                 <>
                     <div className="petHeader">
-                        <img src={pet.image} alt={pet.name} />
+                        <img src={`http://localhost:3500/images/${pet.image}`} alt={pet.name} />
                         <div className="petName">
                             <h3>{pet.name}</h3>
                             <p>{`${pet.type} (${pet.breed})`}</p>
