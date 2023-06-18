@@ -6,6 +6,7 @@ import Profile from "./components/profile/Profile";
 import AddPet from "./components/addPet/AddPet";
 import AddPetTest from "./components/addPet/AddPetTest";
 import Logout from "./components/Logout";
+import ImageCrop from "./components/imageCrop/ImageCrop";
 import PersistLogin from "./components/PersistLogin";
 import RequireAuth from "./components/RequireAuth";
 import "./css/Global.css";
@@ -33,6 +34,9 @@ function App() {
                     </Route>
                     <Route element={<RequireAuth allowedRoles={[ROLES.User]}/>}>
                         <Route path="/logout" element={<Logout />} />
+                    </Route>
+                    <Route element={<RequireAuth allowedRoles={[ROLES.User]}/>}>
+                        <Route path="/crop_photo" element={<ImageCrop src="https://www.digitalmomblog.com/wp-content/uploads/2020/10/among-us-meme-sus.jpeg"/>} />
                     </Route>
                 </Route>
             </Route>
