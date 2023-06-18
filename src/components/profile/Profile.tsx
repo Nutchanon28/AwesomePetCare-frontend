@@ -6,6 +6,7 @@ import EditUser from "./EditUser";
 import { FaEdit } from "react-icons/fa";
 import PetList from "./PetList";
 import PetDetail from "./PetDetail";
+import Popup from "../imageCrop/ImageCropPopup";
 
 interface IPet {
     ownerId: string;
@@ -29,6 +30,7 @@ const Profile = () => {
     const [selectedPet, setSelectedPet] = useState<IPet | null>(null);
     const [avatar, setAvatar] = useState<File | null>(null);
     const hiddenImageInputRef = useRef<HTMLInputElement>(null);
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
 
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
@@ -100,10 +102,15 @@ const Profile = () => {
 
     const handleAvatarSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(avatar);
+        // postAvatar();
+        // console.log(avatar);
+    };
 
+    const postAvatar = async (blob: Blob) => {
         const formData = new FormData();
-        if (avatar) formData.append("avatar", avatar);
+        if (avatar) formData.append("avatar", blob);
+        console.log("--------Blob is this--------");
+        console.log(blob);
         try {
             const response = await axiosPrivate.put(
                 "/profile/avatar",
@@ -118,6 +125,7 @@ const Profile = () => {
     };
 
     const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setIsPopupOpen(true);
         const file = e.target.files?.[0];
 
         if (file) {
@@ -186,6 +194,13 @@ const Profile = () => {
                 <PetList pets={pets} setSelectedPet={setSelectedPet} />
                 <PetDetail pet={selectedPet} />
             </div>
+            {isPopupOpen && (
+                <Popup
+                    onClose={() => setIsPopupOpen(false)}
+                    onSubmit={postAvatar}
+                    imgSrc={avatarPath}
+                />
+            )}
         </>
     );
 };

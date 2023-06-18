@@ -14,8 +14,12 @@ import "react-image-crop/dist/ReactCrop.css";
 
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
-const ImageCrop = () => {
-    const [imgSrc, setImgSrc] = useState("");
+interface ImageCropProps {
+    imgSrc: string;
+    onSubmit: (blob: Blob) => void;
+}
+
+const ImageCrop: React.FC<ImageCropProps> = ({ imgSrc, onSubmit }) => {
     const [scale, setScale] = useState(1);
     const [rotate, setRotate] = useState(0);
     const [aspect, setAspect] = useState<number | undefined>(1);
@@ -49,17 +53,6 @@ const ImageCrop = () => {
         );
     }
 
-    function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
-        if (e.target.files && e.target.files.length > 0) {
-            setCrop(undefined); // Makes crop preview update between images.
-            const reader = new FileReader();
-            reader.addEventListener("load", () =>
-                setImgSrc(reader.result?.toString() || "")
-            );
-            reader.readAsDataURL(e.target.files[0]);
-        }
-    }
-
     function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
         if (aspect) {
             const { width, height } = e.currentTarget;
@@ -83,18 +76,19 @@ const ImageCrop = () => {
             hiddenAnchorRef.current!.href = blobUrlRef.current;
             hiddenAnchorRef.current!.click();
 
-            const formData = new FormData();
-            if (blob) formData.append("avatar", blob);
-            try {
-                const response = await axiosPrivate.put(
-                    "/profile/avatar",
-                    formData,
-                    { headers: { "Content-Type": "multipart/form-data" } }
-                );
-                console.log(response);
-            } catch (error) {
-                console.log(error);
-            }
+            // const formData = new FormData();
+            // if (blob) formData.append("avatar", blob);
+            // try {
+            //     const response = await axiosPrivate.put(
+            //         "/profile/avatar",
+            //         formData,
+            //         { headers: { "Content-Type": "multipart/form-data" } }
+            //     );
+            //     console.log(response);
+            // } catch (error) {
+            //     console.log(error);
+            // }
+            onSubmit(blob);
         });
     }
 
@@ -121,8 +115,7 @@ const ImageCrop = () => {
     );
 
     return (
-        <>
-            <input type="file" accept="image/*" onChange={onSelectFile} />
+        <div>
             <div>
                 <label htmlFor="scale-input">Scale: </label>
                 <input
@@ -164,6 +157,7 @@ const ImageCrop = () => {
                         src={imgSrc}
                         style={{
                             transform: `scale(${scale}) rotate(${rotate}deg)`,
+                            maxHeight: "60vh" // 500px, 600px also works
                         }}
                         onLoad={onImageLoad}
                     />
@@ -179,6 +173,7 @@ const ImageCrop = () => {
                                 objectFit: "contain",
                                 width: completedCrop.width,
                                 height: completedCrop.height,
+                                display: "none",
                             }}
                         />
                     </div>
@@ -200,7 +195,7 @@ const ImageCrop = () => {
                     </div>
                 </>
             )}
-        </>
+        </div>
     );
 };
 
