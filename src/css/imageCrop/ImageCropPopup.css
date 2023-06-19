@@ -9,6 +9,8 @@
 }
 
 #popup {
+    display: flex;
+    flex-direction: column;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -16,10 +18,14 @@
     background-color: white;
     padding: 20px;
     z-index: 10000; /* Ensure the popup is on top of the overlay */
-    max-width: 80%;
-    max-height: 80%;
+    /* max-width: 80vw;
+    max-height: 80vh; */
 }
 
-#closeButton {
-    margin-top: 20px;
+.closeButton {
+    margin-left: auto;
+}
+
+.closeButton:hover {
+    cursor: pointer;
 }

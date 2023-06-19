@@ -28,7 +28,7 @@ const Profile = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [isChangingAvatar, setIsChangingAvatar] = useState(false);
     const [selectedPet, setSelectedPet] = useState<IPet | null>(null);
-    const [avatar, setAvatar] = useState<File | null>(null);
+    const [newAvatarPath, setNewAvatarPath] = useState("");
     const hiddenImageInputRef = useRef<HTMLInputElement>(null);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
 
@@ -100,15 +100,9 @@ const Profile = () => {
         }
     };
 
-    const handleAvatarSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        // postAvatar();
-        // console.log(avatar);
-    };
-
     const postAvatar = async (blob: Blob) => {
         const formData = new FormData();
-        if (avatar) formData.append("avatar", blob);
+        if (blob) formData.append("avatar", blob);
         console.log("--------Blob is this--------");
         console.log(blob);
         try {
@@ -119,6 +113,8 @@ const Profile = () => {
             );
             console.log(response);
             setIsChangingAvatar(false);
+            setIsPopupOpen(false);
+            setAvatarPath(URL.createObjectURL(blob));
         } catch (error) {
             console.log(error);
         }
@@ -130,11 +126,10 @@ const Profile = () => {
 
         if (file) {
             const reader = new FileReader();
-            setAvatar(file);
             setIsChangingAvatar(true);
 
             reader.onload = () => {
-                setAvatarPath(reader.result as string);
+                setNewAvatarPath(reader.result as string);
             };
 
             reader.readAsDataURL(file);
@@ -148,7 +143,7 @@ const Profile = () => {
     return (
         <>
             <div className="profile">
-                <form className="avatarForm" onSubmit={handleAvatarSubmit}>
+                <form className="avatarForm">
                     <img
                         src={avatarPath || "placeholder.jpg"}
                         alt="avatar"
@@ -167,7 +162,7 @@ const Profile = () => {
                         onChange={handleAvatarChange}
                         style={{ display: "none" }}
                     />
-                    {isChangingAvatar && <button type="submit">save</button>}
+                    {/* {isChangingAvatar && <button type="submit">save</button>} */}
                 </form>
                 {isEditing ? (
                     <EditUser
@@ -198,7 +193,7 @@ const Profile = () => {
                 <Popup
                     onClose={() => setIsPopupOpen(false)}
                     onSubmit={postAvatar}
-                    imgSrc={avatarPath}
+                    imgSrc={newAvatarPath}
                 />
             )}
         </>

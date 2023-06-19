@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import "../../css/imageCrop/ImageCropPopup.css";
 import ImageCrop from "./ImageCrop";
+import { FaTimes } from "react-icons/fa";
 
 interface PopupProps {
     onClose: () => void;
@@ -26,9 +27,13 @@ const Popup: React.FC<PopupProps> = ({ onClose, onSubmit, imgSrc }) => {
         <>
             <div id="overlay"></div>
             <div id="popup">
-                <h1>Popup Title</h1>
-                <ImageCrop imgSrc={imgSrc} onSubmit={onSubmit}/>
-                <button id="closeButton">Close</button>
+                <FaTimes
+                    onClick={() => onClose()}
+                    className="closeButton"
+                    // style={{ marginLeft: "auto"}}
+                />
+                <ImageCrop imgSrc={imgSrc} onSubmit={onSubmit} />
+                {/* <button id="closeButton">Close</button> */}
             </div>
         </>
     );

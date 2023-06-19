@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import "../../css/imageCrop/ImageCrop.css";
 
 import ReactCrop, {
     centerCrop,
@@ -13,6 +14,9 @@ import { useDebounceEffect } from "../../hooks/useDebounceEffect";
 import "react-image-crop/dist/ReactCrop.css";
 
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+
+import { FaSearchPlus, FaSearchMinus } from "react-icons/fa";
+import { MdRotateLeft, MdRotateRight } from "react-icons/md";
 
 interface ImageCropProps {
     imgSrc: string;
@@ -30,6 +34,7 @@ const ImageCrop: React.FC<ImageCropProps> = ({ imgSrc, onSubmit }) => {
     const hiddenAnchorRef = useRef<HTMLAnchorElement>(null);
     const blobUrlRef = useRef("");
     const axiosPrivate = useAxiosPrivate();
+    const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
 
     // This is to demonstate how to make and center a % aspect crop
     // which is a bit trickier so we use some helper functions.
@@ -60,7 +65,7 @@ const ImageCrop: React.FC<ImageCropProps> = ({ imgSrc, onSubmit }) => {
         }
     }
 
-    function onDownloadCropClick() {
+    function onClick() {
         if (!previewCanvasRef.current) {
             throw new Error("Crop canvas does not exist");
         }
@@ -69,28 +74,41 @@ const ImageCrop: React.FC<ImageCropProps> = ({ imgSrc, onSubmit }) => {
             if (!blob) {
                 throw new Error("Failed to create blob");
             }
-            if (blobUrlRef.current) {
-                URL.revokeObjectURL(blobUrlRef.current);
-            }
-            blobUrlRef.current = URL.createObjectURL(blob);
-            hiddenAnchorRef.current!.href = blobUrlRef.current;
-            hiddenAnchorRef.current!.click();
 
-            // const formData = new FormData();
-            // if (blob) formData.append("avatar", blob);
-            // try {
-            //     const response = await axiosPrivate.put(
-            //         "/profile/avatar",
-            //         formData,
-            //         { headers: { "Content-Type": "multipart/form-data" } }
-            //     );
-            //     console.log(response);
-            // } catch (error) {
-            //     console.log(error);
-            // }
             onSubmit(blob);
         });
     }
+
+    const handleMouseDown = (direction: "left" | "right") => {
+        const increment = direction === "left" ? -1 : 1;
+        setRotate((prevRotate) =>
+            Math.min(180, Math.max(-180, prevRotate + increment))
+        );
+
+        const id = setInterval(() => {
+            setRotate((prevRotate) =>
+                Math.min(180, Math.max(-180, prevRotate + increment))
+            );
+        }, 100);
+
+        setIntervalId(id);
+    };
+
+    const handleMouseUp = () => {
+        if (intervalId) {
+            clearInterval(intervalId);
+            setIntervalId(null);
+        }
+    };
+
+    useEffect(() => {
+        return () => {
+            if (intervalId) {
+                clearInterval(intervalId);
+                setIntervalId(null);
+            }
+        };
+    }, [intervalId]);
 
     useDebounceEffect(
         async () => {
@@ -116,7 +134,7 @@ const ImageCrop: React.FC<ImageCropProps> = ({ imgSrc, onSubmit }) => {
 
     return (
         <div>
-            <div>
+            <div style={{ display: "none" }}>
                 <label htmlFor="scale-input">Scale: </label>
                 <input
                     id="scale-input"
@@ -127,7 +145,7 @@ const ImageCrop: React.FC<ImageCropProps> = ({ imgSrc, onSubmit }) => {
                     onChange={(e) => setScale(Number(e.target.value))}
                 />
             </div>
-            <div>
+            <div style={{ display: "none" }}>
                 <label htmlFor="rotate-input">Rotate: </label>
                 <input
                     id="rotate-input"
@@ -144,6 +162,18 @@ const ImageCrop: React.FC<ImageCropProps> = ({ imgSrc, onSubmit }) => {
                     }
                 />
             </div>
+            <div>
+                <FaSearchPlus onClick={() => setScale(scale + 0.1)} />
+                <FaSearchMinus onClick={() => setScale(scale - 0.1)} />
+                <MdRotateLeft
+                    onMouseDown={() => handleMouseDown("left")}
+                    onMouseUp={handleMouseUp}
+                />
+                <MdRotateRight
+                    onMouseDown={() => handleMouseDown("right")}
+                    onMouseUp={handleMouseUp}
+                />
+            </div>
             {!!imgSrc && (
                 <ReactCrop
                     crop={crop}
@@ -157,7 +187,8 @@ const ImageCrop: React.FC<ImageCropProps> = ({ imgSrc, onSubmit }) => {
                         src={imgSrc}
                         style={{
                             transform: `scale(${scale}) rotate(${rotate}deg)`,
-                            maxHeight: "60vh" // 500px, 600px also works
+                            maxHeight: "60vh", // 500px, 600px also works
+                            maxWidth: "60vw",
                         }}
                         onLoad={onImageLoad}
                     />
@@ -178,20 +209,7 @@ const ImageCrop: React.FC<ImageCropProps> = ({ imgSrc, onSubmit }) => {
                         />
                     </div>
                     <div>
-                        <button onClick={onDownloadCropClick}>
-                            Download Crop
-                        </button>
-                        <a
-                            ref={hiddenAnchorRef}
-                            download
-                            style={{
-                                position: "absolute",
-                                top: "-200vh",
-                                visibility: "hidden",
-                            }}
-                        >
-                            Hidden download
-                        </a>
+                        <button onClick={onClick}>save</button>
                     </div>
                 </>
             )}
