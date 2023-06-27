@@ -7,6 +7,7 @@ import { FaEdit } from "react-icons/fa";
 import PetList from "./PetList";
 import PetDetail from "./PetDetail";
 import Popup from "../imageCrop/ImageCropPopup";
+import userDefaultAvatar from "../../images/user.png";
 
 interface IPet {
     ownerId: string;
@@ -145,7 +146,7 @@ const Profile = () => {
             <div className="profile">
                 <form className="avatarForm">
                     <img
-                        src={avatarPath || "placeholder.jpg"}
+                        src={avatarPath || userDefaultAvatar}
                         alt="avatar"
                         className="avatar"
                         onClick={handleImageClick}
@@ -201,3 +202,7 @@ const Profile = () => {
 };
 
 export default Profile;
+
+// Icons needed attribution
+{/* <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Smashicons - Flaticon</a> */}
+

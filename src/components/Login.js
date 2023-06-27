@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "../api/axios";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import "../css/Login.css";
 
 const Login = () => {
     const { setAuth, persist, setPersist } = useAuth();
@@ -69,14 +70,14 @@ const Login = () => {
     }, [persist]);
 
     return (
-        <section>
+        <section className="loginSection">
             {errorMessage !== null && (
                 <p ref={errorRef} aria-live="assertive">
                     {errorMessage}
                 </p>
             )}
             <h1>Sign In</h1>
-            <form onSubmit={handleSubmit}>
+            <form className="loginForm" onSubmit={handleSubmit}>
                 <label htmlFor="username">username</label>
                 <input
                     required
@@ -98,13 +99,16 @@ const Login = () => {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <button type="submit">Sign In</button>
-                <input
-                    type="checkbox"
-                    id="persist"
-                    onChange={togglePersist}
-                    checked={persist}
-                />
-                <label htmlFor="persist">Trust This Device</label>
+                <div className="persistChecker">
+                    <input
+                        className="persistCheckbox"
+                        type="checkbox"
+                        id="persist"
+                        onChange={togglePersist}
+                        checked={persist}
+                    />
+                    <label htmlFor="persist">Trust This Device</label>
+                </div>
             </form>
         </section>
     );
