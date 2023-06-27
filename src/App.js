@@ -4,6 +4,7 @@ import Login from "./components/Login";
 import Home from "./components/home/Home";
 import Profile from "./components/profile/Profile";
 import AddPet from "./components/addPet/AddPet";
+import BookService from "./components/bookService/BookService";
 import AddPetTest from "./components/addPet/AddPetTest";
 import Logout from "./components/Logout";
 import ImageCrop from "./components/imageCrop/ImageCrop";
@@ -34,6 +35,9 @@ function App() {
                     </Route>
                     <Route element={<RequireAuth allowedRoles={[ROLES.User]}/>}>
                         <Route path="/logout" element={<Logout />} />
+                    </Route>
+                    <Route element={<RequireAuth allowedRoles={[ROLES.User]}/>}>
+                        <Route path="/book_service" element={<BookService />} />
                     </Route>
                     <Route element={<RequireAuth allowedRoles={[ROLES.User]}/>}>
                         <Route path="/crop_photo" element={<ImageCrop src="https://www.digitalmomblog.com/wp-content/uploads/2020/10/among-us-meme-sus.jpeg"/>} />
