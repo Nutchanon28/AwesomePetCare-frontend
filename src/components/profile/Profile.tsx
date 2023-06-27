@@ -27,7 +27,6 @@ const Profile = () => {
     const [pets, setPets] = useState([]);
 
     const [isEditing, setIsEditing] = useState(false);
-    const [isChangingAvatar, setIsChangingAvatar] = useState(false);
     const [selectedPet, setSelectedPet] = useState<IPet | null>(null);
     const [newAvatarPath, setNewAvatarPath] = useState("");
     const hiddenImageInputRef = useRef<HTMLInputElement>(null);
@@ -50,8 +49,6 @@ const Profile = () => {
                 const petResponse = await axiosPrivate.get("/pet", {
                     signal: controller.signal,
                 });
-                console.log(response.data);
-                console.log(petResponse.data);
                 if (isMounted) {
                     setUsername(response?.data?.user?.username ?? "");
                     setName(response?.data?.user?.name ?? "");
@@ -113,21 +110,24 @@ const Profile = () => {
                 { headers: { "Content-Type": "multipart/form-data" } }
             );
             console.log(response);
-            setIsChangingAvatar(false);
             setIsPopupOpen(false);
             setAvatarPath(URL.createObjectURL(blob));
+            const avatarInput = document.getElementById(
+                "avatar"
+            ) as HTMLInputElement;
+            avatarInput.value = "";
         } catch (error) {
             console.log(error);
         }
     };
 
     const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log("img onChange triggered");
         setIsPopupOpen(true);
         const file = e.target.files?.[0];
 
         if (file) {
             const reader = new FileReader();
-            setIsChangingAvatar(true);
 
             reader.onload = () => {
                 setNewAvatarPath(reader.result as string);
@@ -139,6 +139,14 @@ const Profile = () => {
 
     const handleImageClick = () => {
         hiddenImageInputRef.current?.click();
+    };
+
+    const handlePopupClose = () => {
+        setIsPopupOpen(false);
+        const avatarInput = document.getElementById(
+            "avatar"
+        ) as HTMLInputElement;
+        avatarInput.value = "";
     };
 
     return (
@@ -163,7 +171,6 @@ const Profile = () => {
                         onChange={handleAvatarChange}
                         style={{ display: "none" }}
                     />
-                    {/* {isChangingAvatar && <button type="submit">save</button>} */}
                 </form>
                 {isEditing ? (
                     <EditUser
@@ -192,7 +199,7 @@ const Profile = () => {
             </div>
             {isPopupOpen && (
                 <Popup
-                    onClose={() => setIsPopupOpen(false)}
+                    onClose={handlePopupClose}
                     onSubmit={postAvatar}
                     imgSrc={newAvatarPath}
                 />
@@ -204,5 +211,6 @@ const Profile = () => {
 export default Profile;
 
 // Icons needed attribution
-{/* <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Smashicons - Flaticon</a> */}
-
+{
+    /* <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Smashicons - Flaticon</a> */
+}

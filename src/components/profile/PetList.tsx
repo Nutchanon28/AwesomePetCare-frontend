@@ -19,7 +19,6 @@ interface PetListProps {
 }
 
 const PetList = ({ pets, setSelectedPet }: PetListProps) => {
-    console.log(pets);
     return (
         <ul className="petList">
             {pets?.map((pet) => {

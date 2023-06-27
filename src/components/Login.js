@@ -99,6 +99,7 @@ const Login = () => {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <button type="submit">Sign In</button>
+                <Link to="/register">Sign Up</Link>
                 <div className="persistChecker">
                     <input
                         className="persistCheckbox"

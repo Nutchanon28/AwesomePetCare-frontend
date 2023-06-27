@@ -27,6 +27,7 @@ const BookService = () => {
                 value={value}
                 tileDisabled={tileDisabled}
             />
+            <input type="file" accept="image/*" onChange={() => console.log("changed")}/>
         </div>
     );
 };
