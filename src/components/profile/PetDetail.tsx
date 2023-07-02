@@ -1,6 +1,6 @@
 import React from "react";
-import { FaPlus } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { FaPlus, FaEdit } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import "../../css/profile/PetDetail.css";
 
 interface IPet {
@@ -17,15 +17,27 @@ interface IPet {
 }
 
 const PetDetail = ({ pet }: IPet) => {
+    const navigate = useNavigate();
+
     return (
         <div className="petDetail">
-            <Link to="/add_pet" className="plusIcon">
-                <FaPlus style={{ color: "#333" }} />
-            </Link>
+            <div className="petCrud">
+                <FaPlus
+                    style={{ color: "#333" }}
+                    onClick={() => navigate("/add_pet")}
+                />
+                <FaEdit
+                    style={{ color: "#333" }}
+                    onClick={() => navigate("/edit_pet")}
+                />
+            </div>
             {pet != null ? (
                 <>
                     <div className="petHeader">
-                        <img src={`http://localhost:3500/images/${pet.image}`} alt={pet.name} />
+                        <img
+                            src={`http://localhost:3500/images/${pet.image}`}
+                            alt={pet.name}
+                        />
                         <div className="petName">
                             <h3>{pet.name}</h3>
                             <p>{`${pet.type} (${pet.breed})`}</p>

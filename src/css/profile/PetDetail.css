@@ -6,13 +6,20 @@
     padding: 0 2rem 4rem 2rem;
 }
 
+.petCrud {
+    display: flex;
+    align-self: flex-end;
+    margin-top: 1rem;
+    gap: 1rem
+}
+
 
 .plusIcon {
     align-self: flex-end;
     margin: 2rem 1rem 1rem 0;
 }
 
-.plusIcon:hover {
+.plusIcon:hover, .petCrud:hover {
     cursor: pointer;
 }
 

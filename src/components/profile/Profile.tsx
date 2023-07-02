@@ -10,6 +10,7 @@ import Popup from "../imageCrop/ImageCropPopup";
 import userDefaultAvatar from "../../images/user.png";
 
 interface IPet {
+    _id: string;
     ownerId: string;
     name: string;
     type: string;
@@ -36,6 +37,10 @@ const Profile = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const effectRan = useRef(false);
+
+    useEffect(() => {
+        if(selectedPet) localStorage.setItem("selectedPet", JSON.stringify(selectedPet));
+    }, [selectedPet])
 
     useEffect(() => {
         let isMounted = true;

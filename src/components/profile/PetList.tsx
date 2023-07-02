@@ -3,6 +3,7 @@ import Pet from "./Pet";
 import "../../css/profile/PetList.css";
 
 interface IPet {
+    _id: string;
     ownerId: string;
     name: string;
     type: string;

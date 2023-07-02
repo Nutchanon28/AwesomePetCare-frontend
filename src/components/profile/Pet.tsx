@@ -1,6 +1,7 @@
 import React from "react";
 
 interface IPet {
+    _id: string;
     ownerId: string;
     name: string;
     type: string;
