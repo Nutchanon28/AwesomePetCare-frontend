@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import "../../css/profile/Profile.css";
@@ -8,6 +8,7 @@ import PetList from "./PetList";
 import PetDetail from "./PetDetail";
 import Popup from "../imageCrop/ImageCropPopup";
 import userDefaultAvatar from "../../images/user.png";
+import { UserContext } from "../../context/UserProfileContext";
 
 interface IPet {
     _id: string;
@@ -22,9 +23,15 @@ interface IPet {
 }
 
 const Profile = () => {
-    const [name, setName] = useState("");
-    const [username, setUsername] = useState("");
-    const [avatarPath, setAvatarPath] = useState("");
+    const {
+        state: { name, username, avatarPath },
+        setName,
+        setUsername,
+        setAvatarPath,
+    } = useContext(UserContext);
+    // const [name, setName] = useState("");
+    // const [username, setUsername] = useState("");
+    // const [avatarPath, setAvatarPath] = useState("");
     const [pets, setPets] = useState([]);
 
     const [isEditing, setIsEditing] = useState(false);
@@ -39,8 +46,9 @@ const Profile = () => {
     const effectRan = useRef(false);
 
     useEffect(() => {
-        if(selectedPet) localStorage.setItem("selectedPet", JSON.stringify(selectedPet));
-    }, [selectedPet])
+        if (selectedPet)
+            localStorage.setItem("selectedPet", JSON.stringify(selectedPet));
+    }, [selectedPet]);
 
     useEffect(() => {
         let isMounted = true;
@@ -179,10 +187,6 @@ const Profile = () => {
                 </form>
                 {isEditing ? (
                     <EditUser
-                        name={name}
-                        setName={setName}
-                        username={username}
-                        setUsername={setUsername}
                         handleSubmit={handleSubmit}
                     />
                 ) : (

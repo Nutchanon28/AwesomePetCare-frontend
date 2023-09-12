@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../../context/UserProfileContext";
 
 interface EditUserProps {
-    name: string,
-    setName: React.Dispatch<React.SetStateAction<string>>,
-    username: string,
-    setUsername: React.Dispatch<React.SetStateAction<string>>,
+    // name: string,
+    // setName: React.Dispatch<React.SetStateAction<string>>,
+    // username: string,
+    // setUsername: React.Dispatch<React.SetStateAction<string>>,
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>
 }
 
-const EditUser = ({ name, setName, username, setUsername, handleSubmit }: EditUserProps) => {
+const EditUser = ({ handleSubmit }: EditUserProps) => {
+    const {
+        state: { name, username },
+        setName,
+        setUsername,
+    } = useContext(UserContext);
+
     return (
         <form className="userForm" onSubmit={handleSubmit}>
             <label htmlFor="name">name</label>

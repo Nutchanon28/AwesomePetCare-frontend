@@ -1,10 +1,12 @@
 import React from "react";
-import { FaPlus, FaEdit } from "react-icons/fa";
+import { FaPlus, FaEdit, FaMinus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import "../../css/profile/PetDetail.css";
 
 interface IPet {
     pet: {
+        _id: string;
         ownerId: string;
         name: string;
         type: string;
@@ -18,6 +20,18 @@ interface IPet {
 
 const PetDetail = ({ pet }: IPet) => {
     const navigate = useNavigate();
+    const axiosPrivate = useAxiosPrivate();
+
+    const handleDelete = async () => {
+        try {
+            const result = await axiosPrivate.delete(`/pet/${pet?._id}`);
+            localStorage.removeItem("selectedPet");
+            window.location.reload();
+            console.log(result);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <div className="petDetail">
@@ -26,10 +40,18 @@ const PetDetail = ({ pet }: IPet) => {
                     style={{ color: "#333" }}
                     onClick={() => navigate("/add_pet")}
                 />
-                <FaEdit
-                    style={{ color: "#333" }}
-                    onClick={() => navigate("/edit_pet")}
-                />
+                {pet && (
+                    <>
+                        <FaEdit
+                            style={{ color: "#333" }}
+                            onClick={() => navigate("/edit_pet")}
+                        />
+                        <FaMinus
+                            style={{ color: "#333" }}
+                            onClick={handleDelete}
+                        />
+                    </>
+                )}
             </div>
             {pet != null ? (
                 <>
