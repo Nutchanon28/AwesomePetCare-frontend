@@ -1,20 +1,26 @@
 import React, { useContext } from "react";
 import { UserContext } from "../../context/UserProfileContext";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
-interface EditUserProps {
-    // name: string,
-    // setName: React.Dispatch<React.SetStateAction<string>>,
-    // username: string,
-    // setUsername: React.Dispatch<React.SetStateAction<string>>,
-    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>
-}
-
-const EditUser = ({ handleSubmit }: EditUserProps) => {
+const EditUser = () => {
     const {
         state: { name, username },
         setName,
         setUsername,
     } = useContext(UserContext);
+    const axiosPrivate = useAxiosPrivate();
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        try {
+            const response = await axiosPrivate.put("/profile", {
+                name,
+            });
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <form className="userForm" onSubmit={handleSubmit}>

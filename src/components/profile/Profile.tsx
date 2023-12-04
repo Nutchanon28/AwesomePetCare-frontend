@@ -29,16 +29,14 @@ const Profile = () => {
         setUsername,
         setAvatarPath,
     } = useContext(UserContext);
-    // const [name, setName] = useState("");
-    // const [username, setUsername] = useState("");
-    // const [avatarPath, setAvatarPath] = useState("");
+
     const [pets, setPets] = useState([]);
 
     const [isEditing, setIsEditing] = useState(false);
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [selectedPet, setSelectedPet] = useState<IPet | null>(null);
     const [newAvatarPath, setNewAvatarPath] = useState("");
     const hiddenImageInputRef = useRef<HTMLInputElement>(null);
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
 
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
@@ -98,18 +96,6 @@ const Profile = () => {
             setAvatarPath("");
         };
     }, []);
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        try {
-            const response = await axiosPrivate.put("/profile", {
-                name,
-            });
-            console.log(response);
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
     const postAvatar = async (blob: Blob) => {
         const formData = new FormData();
@@ -185,11 +171,9 @@ const Profile = () => {
                         style={{ display: "none" }}
                     />
                 </form>
-                {isEditing ? (
-                    <EditUser
-                        handleSubmit={handleSubmit}
-                    />
-                ) : (
+                {isEditing ? 
+                    <EditUser/>
+                 : (
                     <div className="userInfo">
                         <h2>{name}</h2>
                         <p>{username}</p>
