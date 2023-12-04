@@ -26,7 +26,7 @@ const Pet = ({ pet, setSelectedPet }: PetProps) => {
             }}
         >
             <img src={`http://localhost:3500/images/${pet.image}`} alt={pet.name} />
-            <div>
+            <div className="petShortDesc">
                 <h4>{pet.name}</h4>
                 <p>{`${pet.type} (${pet.breed})`}</p>
             </div>

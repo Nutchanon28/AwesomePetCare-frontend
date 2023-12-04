@@ -44,7 +44,9 @@
     align-self: flex-end;
 }
 
-.profileIcon:hover, button, .avatarForm img:hover {
+.profileIcon:hover,
+button,
+.avatarForm img:hover {
     cursor: pointer;
 }
 
@@ -58,4 +60,10 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
+}
+
+@media only screen and (max-width: 600px) {
+    .petSection {
+        flex-direction: column;
+    }
 }
