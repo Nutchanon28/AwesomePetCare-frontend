@@ -151,39 +151,43 @@ const Profile = () => {
     return (
         <>
             <div className="profile">
-                <form className="avatarForm">
-                    <img
-                        src={avatarPath || userDefaultAvatar}
-                        alt="avatar"
-                        className="avatar"
-                        onClick={handleImageClick}
+                <div className="profileCard">
+                    <form className="avatarForm">
+                        <img
+                            src={avatarPath || userDefaultAvatar}
+                            alt="avatar"
+                            className="avatar"
+                            onClick={handleImageClick}
+                        />
+                        <label htmlFor="avatar" style={{ display: "none" }}>
+                            avatar
+                        </label>
+                        <input
+                            required
+                            ref={hiddenImageInputRef}
+                            id="avatar"
+                            type="file"
+                            accept="image/*"
+                            onChange={handleAvatarChange}
+                            style={{ display: "none" }}
+                        />
+                    </form>
+                    {isEditing ? (
+                        <EditUser />
+                    ) : (
+                        <div className="userInfo">
+                            <h2>{name}</h2>
+                            <p>{username}</p>
+                        </div>
+                    )}
+                    <FaEdit
+                        style={
+                            isEditing ? { color: "#004ABB" } : { color: "#333" }
+                        }
+                        className="profileIcon"
+                        onClick={() => setIsEditing(!isEditing)}
                     />
-                    <label htmlFor="avatar" style={{ display: "none" }}>
-                        avatar
-                    </label>
-                    <input
-                        required
-                        ref={hiddenImageInputRef}
-                        id="avatar"
-                        type="file"
-                        accept="image/*"
-                        onChange={handleAvatarChange}
-                        style={{ display: "none" }}
-                    />
-                </form>
-                {isEditing ? 
-                    <EditUser/>
-                 : (
-                    <div className="userInfo">
-                        <h2>{name}</h2>
-                        <p>{username}</p>
-                    </div>
-                )}
-                <FaEdit
-                    style={isEditing ? { color: "#004ABB" } : { color: "#333" }}
-                    className="profileIcon"
-                    onClick={() => setIsEditing(!isEditing)}
-                />
+                </div>
             </div>
             <div className="profileSeperationLine"></div>
             <div className="petSection">

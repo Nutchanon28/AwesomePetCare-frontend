@@ -1,4 +1,5 @@
-.profile {
+.profile,
+.profileCard {
     display: flex;
     width: 100%;
     justify-content: center;
@@ -60,6 +61,36 @@ button,
     display: flex;
     width: 100%;
     justify-content: space-between;
+}
+
+@media only screen and (min-width: 400px) {
+    .profileCard {
+        width: 400px;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    .profileCard {
+        width: 600px;
+    }
+}
+
+@media only screen and (min-width: 800px) {
+    .profileCard {
+        width: 800px;
+    }
+}
+
+@media only screen and (min-width: 1000px) {
+    .profileCard {
+        width: 1000px;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .profileCard {
+        width: 1200px;
+    }
 }
 
 @media only screen and (max-width: 600px) {
