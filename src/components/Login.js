@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "../api/axios";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
+import { useLoginMutation } from "../features/auth/authApiSlice";
+// import axios from "../api/axios";
+// import useAuth from "../hooks/useAuth";
 import "../css/Login.css";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../features/auth/authSlice";
 
 const Login = () => {
-    const { setAuth, persist, setPersist } = useAuth();
+    // const { setAuth, persist, setPersist } = useAuth();
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -17,6 +20,9 @@ const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState(null);
+    const [login, { isLoading }] = useLoginMutation();
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         userRef.current?.focus();
@@ -29,21 +35,12 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(
-                "/login",
-                {
-                    username,
-                    password,
-                },
-                {
-                    headers: { "Content-Type": "application/json" },
-                    withCredentials: true,
-                }
-            );
+            const response = await login({ username, password }).unwrap();
             console.log(response);
-            const accessToken = response?.data?.accessToken;
-            const roles = response?.data?.roles;
-            setAuth({ username, password, roles, accessToken }); // TODO: why are you storing password in auth?
+            dispatch(setCredentials({ ...response, user: username }));
+            // const accessToken = response?.data?.accessToken;
+            // const roles = response?.data?.roles;
+            // // setAuth({ username, password, roles, accessToken }); // TODO: why are you storing password in auth?
             setUsername("");
             setPassword("");
             navigate(from, { replace: true });
@@ -61,13 +58,13 @@ const Login = () => {
         }
     };
 
-    const togglePersist = () => {
-        setPersist((prev) => !prev);
-    };
+    // const togglePersist = () => {
+    //     setPersist((prev) => !prev);
+    // };
 
-    useEffect(() => {
-        localStorage.setItem("persist", persist);
-    }, [persist]);
+    // useEffect(() => {
+    //     localStorage.setItem("persist", persist);
+    // }, [persist]);
 
     return (
         <section className="loginSection">
@@ -100,16 +97,6 @@ const Login = () => {
                 />
                 <button type="submit">Sign In</button>
                 <Link to="/register">Sign Up</Link>
-                <div className="persistChecker">
-                    <input
-                        className="persistCheckbox"
-                        type="checkbox"
-                        id="persist"
-                        onChange={togglePersist}
-                        checked={persist}
-                    />
-                    <label htmlFor="persist">Trust This Device</label>
-                </div>
             </form>
         </section>
     );
