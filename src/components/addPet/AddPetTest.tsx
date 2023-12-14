@@ -1,9 +1,8 @@
 import React, { useRef, useState } from "react";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { SubmitHandler, useForm } from "react-hook-form";
 import "../../css/addPet/AddPet.css";
 import { useNavigate } from "react-router-dom";
-import { useInvalidatePetCacheMutation } from "../../features/pets/petsApiSlice";
+import { useAddPetMutation } from "../../features/pets/petsApiSlice";
 
 interface IPetInput {
     name: string;
@@ -20,8 +19,7 @@ const AddPetTest = () => {
         watch,
         formState: { errors },
     } = useForm<IPetInput>();
-    const axiosPrivate = useAxiosPrivate();
-    const [invalidatePetCache] = useInvalidatePetCacheMutation();
+    const [addPet] = useAddPetMutation();
     const hiddenImageInputRef = useRef<HTMLInputElement>(null);
     const [image, setImage] = useState<File | null>();
     const [imagePath, setImagePath] = useState("");
@@ -42,12 +40,8 @@ const AddPetTest = () => {
         console.log(`image = ${image}`);
 
         try {
-            const response = await axiosPrivate.post("/pet", formData, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
-            const rtkResponse = await invalidatePetCache(null).unwrap();
+            const response = await addPet(formData).unwrap();
             console.log(response);
-            console.log(rtkResponse);
             navigate("/profile", { replace: true });
         } catch (error) {
             console.log(error);

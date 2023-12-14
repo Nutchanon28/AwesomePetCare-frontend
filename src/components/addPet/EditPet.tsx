@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate } from "react-router-dom";
-import { useInvalidatePetCacheMutation } from "../../features/pets/petsApiSlice";
+import { useEditPetMutation } from "../../features/pets/petsApiSlice";
 import "../../css/addPet/AddPet.css";
 
 interface IPet {
@@ -32,11 +31,10 @@ const EditPet = () => {
     );
     const [image, setImage] = useState<File | null>(null);
     const [imagePath, setImagePath] = useState(pet?.image ?? "");
-    const [invalidatePetCache] = useInvalidatePetCacheMutation();
+    const [editPet] = useEditPetMutation();
     const addImageLink =
         "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/OOjs_UI_icon_add.svg/1200px-OOjs_UI_icon_add.svg.png";
     const hiddenImageInputRef = useRef<HTMLInputElement>(null);
-    const axiosPrivate = useAxiosPrivate();
 
     const navigate = useNavigate();
 
@@ -73,17 +71,10 @@ const EditPet = () => {
         formData.append("foodAllergies", foodAllergies);
         formData.append("congenitalDisease", congenitalDisease);
         if (image) formData.append("image", image);
+
         try {
-            const response = await axiosPrivate.put(
-                `/pet/${pet?._id}`,
-                formData,
-                {
-                    headers: { "Content-Type": "multipart/form-data" },
-                }
-            );
-            const rtkResponse = await invalidatePetCache(null).unwrap();
+            const response = await editPet({ id: pet?._id ,formData }).unwrap();
             console.log(response);
-            console.log(rtkResponse);
             navigate("/profile", { replace: true });
         } catch (error) {
             console.log(error);

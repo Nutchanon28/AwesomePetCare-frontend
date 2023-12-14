@@ -45,11 +45,11 @@ const Login = () => {
             setPassword("");
             navigate(from, { replace: true });
         } catch (error) {
-            if (!error?.response) {
+            if (!error?.originalStatus) {
                 setErrorMessage("No Server Response");
-            } else if (error.response?.status === 400) {
+            } else if (error.originalStatus === 400) {
                 setErrorMessage("Missing Username or Password");
-            } else if (error.response?.status === 401) {
+            } else if (error.originalStatus === 401) {
                 setErrorMessage("Unauthorized");
             } else {
                 setErrorMessage("Login Failed");
