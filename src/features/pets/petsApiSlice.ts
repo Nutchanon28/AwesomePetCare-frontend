@@ -27,15 +27,25 @@ export const petsApiSlice = apiSlice.injectEndpoints({
             query: (pet) => ({
                 url: `/pet/${pet.id}`,
                 method: "PUT",
-                // headers: {
-                //     "Content-Type": "multipart/form-data;",
-                // },
                 body: pet.formData,
                 formData: true,
+            }),
+            invalidatesTags: ["Pets"],
+        }),
+        deletePet: builder.mutation({
+            query: (id) => ({
+                url: `/pet/${id}`,
+                method: "DELETE",
             }),
             invalidatesTags: ["Pets"],
         }),
     }),
 });
 
-export const { useGetPetsQuery, useInvalidatePetCacheMutation, useAddPetMutation, useEditPetMutation } = petsApiSlice;
+export const {
+    useGetPetsQuery,
+    useInvalidatePetCacheMutation,
+    useAddPetMutation,
+    useEditPetMutation,
+    useDeletePetMutation,
+} = petsApiSlice;

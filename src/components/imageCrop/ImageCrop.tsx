@@ -13,8 +13,6 @@ import { useDebounceEffect } from "../../hooks/useDebounceEffect";
 
 import "react-image-crop/dist/ReactCrop.css";
 
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-
 import { FaSearchPlus, FaSearchMinus } from "react-icons/fa";
 import { MdRotateLeft, MdRotateRight } from "react-icons/md";
 
@@ -33,7 +31,6 @@ const ImageCrop: React.FC<ImageCropProps> = ({ imgSrc, onSubmit }) => {
     const previewCanvasRef = useRef<HTMLCanvasElement>(null);
     const hiddenAnchorRef = useRef<HTMLAnchorElement>(null);
     const blobUrlRef = useRef("");
-    const axiosPrivate = useAxiosPrivate();
     const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
 
     // This is to demonstate how to make and center a % aspect crop

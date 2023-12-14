@@ -1,8 +1,8 @@
 import React from "react";
 import { FaPlus, FaEdit, FaMinus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import "../../css/profile/PetDetail.css";
+import { useDeletePetMutation } from "../../features/pets/petsApiSlice";
 
 interface IPet {
     pet: {
@@ -20,11 +20,11 @@ interface IPet {
 
 const PetDetail = ({ pet }: IPet) => {
     const navigate = useNavigate();
-    const axiosPrivate = useAxiosPrivate();
+    const [deletePet] = useDeletePetMutation();
 
     const handleDelete = async () => {
         try {
-            const result = await axiosPrivate.delete(`/pet/${pet?._id}`);
+            const result = await deletePet(pet?._id).unwrap();
             localStorage.removeItem("selectedPet");
             window.location.reload();
             console.log(result);
