@@ -9,6 +9,7 @@ import PetDetail from "./PetDetail";
 import Popup from "../imageCrop/ImageCropPopup";
 import userDefaultAvatar from "../../images/user.png";
 import { UserContext } from "../../context/UserProfileContext";
+import { useGetPetsQuery } from "../../features/pets/petsApiSlice";
 
 interface IPet {
     _id: string;
@@ -30,7 +31,7 @@ const Profile = () => {
         setAvatarPath,
     } = useContext(UserContext);
 
-    const [pets, setPets] = useState([]);
+    const { data: pets = [] } = useGetPetsQuery(null);
 
     const [isEditing, setIsEditing] = useState(false);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -57,9 +58,6 @@ const Profile = () => {
                 const response = await axiosPrivate.get("/profile", {
                     signal: controller.signal,
                 });
-                const petResponse = await axiosPrivate.get("/pet", {
-                    signal: controller.signal,
-                });
                 if (isMounted) {
                     setUsername(response?.data?.user?.username ?? "");
                     setName(response?.data?.user?.name ?? "");
@@ -69,7 +67,6 @@ const Profile = () => {
                             ? `http://localhost:3500/images/${response?.data?.user?.avatarFileKey}`
                             : ""
                     );
-                    setPets(petResponse?.data ?? []);
                 }
             } catch (error) {
                 console.log(error);

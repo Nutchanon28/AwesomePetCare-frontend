@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { useNavigate, useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useInvalidatePetCacheMutation } from "../../features/pets/petsApiSlice";
 import "../../css/addPet/AddPet.css";
 
 interface IPet {
@@ -31,6 +32,7 @@ const EditPet = () => {
     );
     const [image, setImage] = useState<File | null>(null);
     const [imagePath, setImagePath] = useState(pet?.image ?? "");
+    const [invalidatePetCache] = useInvalidatePetCacheMutation();
     const addImageLink =
         "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/OOjs_UI_icon_add.svg/1200px-OOjs_UI_icon_add.svg.png";
     const hiddenImageInputRef = useRef<HTMLInputElement>(null);
@@ -79,7 +81,9 @@ const EditPet = () => {
                     headers: { "Content-Type": "multipart/form-data" },
                 }
             );
+            const rtkResponse = await invalidatePetCache(null).unwrap();
             console.log(response);
+            console.log(rtkResponse);
             navigate("/profile", { replace: true });
         } catch (error) {
             console.log(error);

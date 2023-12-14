@@ -1,20 +1,11 @@
-import {
-    createSlice,
-    nanoid,
-    createAsyncThunk,
-    createSelector,
-    createEntityAdapter,
-} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-const petsAdapter = createEntityAdapter();
+const petsSlice = createSlice({
+    name: "pets",
+    initialState: [],
+    reducers: {
 
-const initialState = petsAdapter.getInitialState({
-    status: "idle",
-    error: null,
-});
+    }
+})
 
-// const petsSlice = createSlice({
-//     name: 'pets',
-//     initialState,
-//     reducers: 
-// })
+export default petsSlice.reducer;
