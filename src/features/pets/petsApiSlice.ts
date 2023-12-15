@@ -1,8 +1,20 @@
 import { apiSlice } from "../../api/apiSlice";
 
+interface IPet {
+    _id: string;
+    ownerId: string;
+    name: string;
+    type: string;
+    breed: string;
+    foodAllergies: string;
+    congenitalDisease: string;
+    image: string;
+    description?: string;
+}
+
 export const petsApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        getPets: builder.query({
+        getPets: builder.query<IPet[], null>({
             query: () => "/pet",
             providesTags: ["Pets"],
         }),

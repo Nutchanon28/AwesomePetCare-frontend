@@ -7,7 +7,6 @@ import PetList from "./PetList";
 import PetDetail from "./PetDetail";
 import Popup from "../imageCrop/ImageCropPopup";
 import userDefaultAvatar from "../../images/user.png";
-import { useGetPetsQuery } from "../../features/pets/petsApiSlice";
 import {
     useEditUserAvatarMutation,
     useGetUserQuery,
@@ -26,7 +25,6 @@ interface IPet {
 }
 
 const Profile = () => {
-    const { data: pets = [] } = useGetPetsQuery(null);
     const {
         data: userData,
         isLoading,
@@ -158,7 +156,7 @@ const Profile = () => {
             <div className="profile">{profile}</div>
             <div className="profileSeperationLine"></div>
             <div className="petSection">
-                <PetList pets={pets} setSelectedPet={setSelectedPet} />
+                <PetList setSelectedPet={setSelectedPet} />
                 <PetDetail pet={selectedPet} />
             </div>
             {isPopupOpen && (
@@ -175,5 +173,4 @@ const Profile = () => {
 export default Profile;
 
 // Icons needed attribution
-    /* <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Smashicons - Flaticon</a> */
-
+/* <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Smashicons - Flaticon</a> */
