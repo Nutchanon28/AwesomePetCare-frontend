@@ -5,6 +5,7 @@
     justify-content: center;
     align-items: center;
     padding: 2rem 0;
+    flex-shrink: 0;
 }
 
 .avatarForm {
@@ -55,12 +56,14 @@ button,
     border: 0.1rem solid #333;
     width: 90%;
     margin: 0 auto;
+    flex-shrink: 0;
 }
 
 .petSection {
     display: flex;
     width: 100%;
     justify-content: space-between;
+    flex-grow: 1;
 }
 
 @media only screen and (min-width: 400px) {

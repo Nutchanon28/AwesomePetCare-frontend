@@ -5,7 +5,7 @@ const Home = () => {
     return (
         <>
             <h1>Because they're our family.</h1>
-            <img src={happyDog} alt="happy dog" />
+            <img src={happyDog} alt="happy dog" style={{ width: "50%" }} />
         </>
     );
 };
