@@ -24,6 +24,7 @@ interface IPet {
     description?: string;
 }
 
+// TODO: If the accessToken expires, and the user return to this page. The components will be broken?
 const Profile = () => {
     const {
         data: userData,

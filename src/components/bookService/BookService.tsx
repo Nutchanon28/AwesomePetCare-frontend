@@ -1,35 +1,25 @@
 import React, { useState } from "react";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
+import DatePicker from "react-datepicker";
 
-type ValuePiece = Date | null;
-
-type Value = ValuePiece | [ValuePiece, ValuePiece];
-
-type tileDisabledInput = {
-    activeStartDate: Date;
-    date: Date;
-    view: string;
-};
-
-const tileDisabled = ({ activeStartDate, date, view }: tileDisabledInput) =>
-    date.getDay() === 1;
+import "react-datepicker/dist/react-datepicker.css";
 
 const BookService = () => {
-    const [value, onChange] = useState<Value>(new Date());
-
-    console.log(value);
+    const [startDate, setStartDate] = useState(new Date());
 
     return (
         <div>
-            <Calendar
-                onChange={onChange}
-                value={value}
-                tileDisabled={tileDisabled}
+            <DatePicker
+                selected={startDate}
+                onChange={(date) => setStartDate(date || new Date())}
+                showTimeSelect
+                dateFormat="Pp"
             />
-            <input type="file" accept="image/*" onChange={() => console.log("changed")}/>
         </div>
     );
 };
 
 export default BookService;
+
+/*
+I'm currently making 
+*/
