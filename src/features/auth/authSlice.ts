@@ -13,6 +13,7 @@ const authSlice = createSlice({
             /* is there a way to make the user opetional? for action.payload to not necessary need user? */
         },
         logOut: (state) => {
+            localStorage.clear();
             state.user = null;
             state.roles = [];
             state.token = null;

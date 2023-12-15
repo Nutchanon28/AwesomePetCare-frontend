@@ -38,9 +38,10 @@ const Login = () => {
             const response = await login({ username, password }).unwrap();
             console.log(response);
             dispatch(setCredentials({ ...response, user: username }));
-            // const accessToken = response?.data?.accessToken;
-            // const roles = response?.data?.roles;
-            // // setAuth({ username, password, roles, accessToken }); // TODO: why are you storing password in auth?
+
+            /* Can I navigate then window.location.reload() there only once after this? */
+            localStorage.setItem("persist", "true");
+
             setUsername("");
             setPassword("");
             navigate(from, { replace: true });
