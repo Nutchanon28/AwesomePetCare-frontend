@@ -21,6 +21,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 url: "/logout",
                 method: "GET",
             }),
+            invalidatesTags: ["Pets", "User"],
         }),
         refresh: builder.query({
             query: () => "/refresh",
