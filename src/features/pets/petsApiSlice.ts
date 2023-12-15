@@ -44,7 +44,6 @@ export const petsApiSlice = apiSlice.injectEndpoints({
 
 export const {
     useGetPetsQuery,
-    useInvalidatePetCacheMutation,
     useAddPetMutation,
     useEditPetMutation,
     useDeletePetMutation,

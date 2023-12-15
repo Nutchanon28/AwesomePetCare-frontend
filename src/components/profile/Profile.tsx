@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useRef, useContext } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import "../../css/profile/Profile.css";
 import EditUser from "./EditUser";
 import { FaEdit } from "react-icons/fa";
@@ -8,8 +7,11 @@ import PetList from "./PetList";
 import PetDetail from "./PetDetail";
 import Popup from "../imageCrop/ImageCropPopup";
 import userDefaultAvatar from "../../images/user.png";
-import { UserContext } from "../../context/UserProfileContext";
 import { useGetPetsQuery } from "../../features/pets/petsApiSlice";
+import {
+    useEditUserAvatarMutation,
+    useGetUserQuery,
+} from "../../features/user/userApiSlice";
 
 interface IPet {
     _id: string;
@@ -24,14 +26,15 @@ interface IPet {
 }
 
 const Profile = () => {
-    const {
-        state: { name, username, avatarPath },
-        setName,
-        setUsername,
-        setAvatarPath,
-    } = useContext(UserContext);
-
     const { data: pets = [] } = useGetPetsQuery(null);
+    const {
+        data: userData,
+        isLoading,
+        isError,
+        error,
+        isSuccess,
+    } = useGetUserQuery(null);
+    const [editUserAvatar] = useEditUserAvatarMutation();
 
     const [isEditing, setIsEditing] = useState(false);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -39,7 +42,6 @@ const Profile = () => {
     const [newAvatarPath, setNewAvatarPath] = useState("");
     const hiddenImageInputRef = useRef<HTMLInputElement>(null);
 
-    const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
     const location = useLocation();
     const effectRan = useRef(false);
@@ -49,65 +51,16 @@ const Profile = () => {
             localStorage.setItem("selectedPet", JSON.stringify(selectedPet));
     }, [selectedPet]);
 
-    useEffect(() => {
-        let isMounted = true;
-        const controller = new AbortController();
-
-        const getProfile = async () => {
-            try {
-                const response = await axiosPrivate.get("/profile", {
-                    signal: controller.signal,
-                });
-                if (isMounted) {
-                    setUsername(response?.data?.user?.username ?? "");
-                    setName(response?.data?.user?.name ?? "");
-
-                    setAvatarPath(
-                        response?.data?.user?.avatarFileKey
-                            ? `http://localhost:3500/images/${response?.data?.user?.avatarFileKey}`
-                            : ""
-                    );
-                }
-            } catch (error) {
-                console.log(error);
-                if (
-                    effectRan.current ||
-                    process.env.NODE_ENV !== "development"
-                ) {
-                    navigate("/login", {
-                        state: { from: location },
-                        replace: true,
-                    });
-                }
-            }
-        };
-
-        getProfile();
-
-        return () => {
-            console.log("Aborted");
-            isMounted = false;
-            controller.abort();
-            setUsername("");
-            setName("");
-            setAvatarPath("");
-        };
-    }, []);
-
     const postAvatar = async (blob: Blob) => {
         const formData = new FormData();
         if (blob) formData.append("avatar", blob);
         console.log("--------Blob is this--------");
         console.log(blob);
         try {
-            const response = await axiosPrivate.put(
-                "/profile/avatar",
-                formData,
-                { headers: { "Content-Type": "multipart/form-data" } }
-            );
+            const response = await editUserAvatar(formData).unwrap();
             console.log(response);
             setIsPopupOpen(false);
-            setAvatarPath(URL.createObjectURL(blob));
+
             const avatarInput = document.getElementById(
                 "avatar"
             ) as HTMLInputElement;
@@ -145,47 +98,64 @@ const Profile = () => {
         avatarInput.value = "";
     };
 
+    let profile;
+    if (isLoading) {
+        profile = <p>Loading...</p>;
+    } else if (isSuccess) {
+        const user = userData.user;
+        const avatarPath = `http://localhost:3500/images/${user?.avatarFileKey}`;
+        console.log(user);
+
+        profile = (
+            <div className="profileCard">
+                <form className="avatarForm">
+                    <img
+                        src={avatarPath || userDefaultAvatar}
+                        alt="avatar"
+                        className="avatar"
+                        onClick={handleImageClick}
+                    />
+                    <label htmlFor="avatar" style={{ display: "none" }}>
+                        avatar
+                    </label>
+                    <input
+                        required
+                        ref={hiddenImageInputRef}
+                        id="avatar"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleAvatarChange}
+                        style={{ display: "none" }}
+                    />
+                </form>
+                {isEditing ? (
+                    <EditUser />
+                ) : (
+                    <div className="userInfo">
+                        <h2>{user.name ?? ""}</h2>
+                        <p>{user.username ?? ""}</p>
+                    </div>
+                )}
+                <FaEdit
+                    style={isEditing ? { color: "#004ABB" } : { color: "#333" }}
+                    className="profileIcon"
+                    onClick={() => setIsEditing(!isEditing)}
+                />
+            </div>
+        );
+    } else if (isError) {
+        console.log(error);
+        if (effectRan.current || process.env.NODE_ENV !== "development") {
+            navigate("/login", {
+                state: { from: location },
+                replace: true,
+            });
+        }
+    }
+
     return (
         <>
-            <div className="profile">
-                <div className="profileCard">
-                    <form className="avatarForm">
-                        <img
-                            src={avatarPath || userDefaultAvatar}
-                            alt="avatar"
-                            className="avatar"
-                            onClick={handleImageClick}
-                        />
-                        <label htmlFor="avatar" style={{ display: "none" }}>
-                            avatar
-                        </label>
-                        <input
-                            required
-                            ref={hiddenImageInputRef}
-                            id="avatar"
-                            type="file"
-                            accept="image/*"
-                            onChange={handleAvatarChange}
-                            style={{ display: "none" }}
-                        />
-                    </form>
-                    {isEditing ? (
-                        <EditUser />
-                    ) : (
-                        <div className="userInfo">
-                            <h2>{name}</h2>
-                            <p>{username}</p>
-                        </div>
-                    )}
-                    <FaEdit
-                        style={
-                            isEditing ? { color: "#004ABB" } : { color: "#333" }
-                        }
-                        className="profileIcon"
-                        onClick={() => setIsEditing(!isEditing)}
-                    />
-                </div>
-            </div>
+            <div className="profile">{profile}</div>
             <div className="profileSeperationLine"></div>
             <div className="petSection">
                 <PetList pets={pets} setSelectedPet={setSelectedPet} />
@@ -205,6 +175,5 @@ const Profile = () => {
 export default Profile;
 
 // Icons needed attribution
-{
     /* <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Smashicons - Flaticon</a> */
-}
+
