@@ -1,0 +1,30 @@
+.petGrooming {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 3rem;
+}
+
+.petGrooming img {
+    width: 45%;
+    object-fit: cover;
+}
+
+.petGroomingDescription {
+    width: 50%;
+}
+
+@media only screen and (max-width: 900px) {
+    .petGrooming {
+        flex-direction: column;
+    }
+
+    .petGrooming img {
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .petGroomingDescription {
+        width: 100%;
+    }
+}

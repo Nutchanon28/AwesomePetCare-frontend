@@ -8,10 +8,9 @@ import {
     logOut as clearCredentials,
     selectCurrentToken,
 } from "../../features/auth/authSlice";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-/* TODO: hamburger in the middle */
+/* TODO: hamburger in the middle. Also check cookie for login instead of accessToken. */
 const Navbar = () => {
     const screenSize = useScreenSize();
     const dispatch = useDispatch();
@@ -36,21 +35,19 @@ const Navbar = () => {
                     <li>
                         <Link to="/">home</Link>
                     </li>
+                    <li>
+                        <div className="dropdown">
+                            <button className="dropbtn">services</button>
+                            <div className="dropdown-content">
+                                <Link to="/pet_grooming">dog grooming</Link>
+                                <Link to="/pet_sitting">pet sitting</Link>
+                            </div>
+                        </div>
+                    </li>
                     {accessToken && (
                         <>
                             <li>
                                 <Link to="/profile">profile</Link>
-                            </li>
-                            <li>
-                                <div className="dropdown">
-                                    <button className="dropbtn">
-                                        services
-                                    </button>
-                                    <div className="dropdown-content">
-                                        <Link to="/">dog grooming</Link>
-                                        <Link to="/">pet sitting</Link>
-                                    </div>
-                                </div>
                             </li>
                             <li>
                                 <Link to="/login" onClick={handleLogout}>
@@ -68,10 +65,12 @@ const Navbar = () => {
                     <div className="dropdown-content">
                         {!accessToken && <Link to="/login">login</Link>}
                         <Link to="/">home</Link>
+                        <Link to="/pet_grooming">dog grooming</Link>
+                        <Link to="/pet_sitting">pet sitting</Link>
                         {accessToken && (
                             <>
                                 <Link to="/profile">profile</Link>
-                                <Link to="/book_service">services</Link>
+                                {/* <Link to="/book_service">services</Link> */}
                                 <Link to="/login" onClick={handleLogout}>
                                     logout
                                 </Link>

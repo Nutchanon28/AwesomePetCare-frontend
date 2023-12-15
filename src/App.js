@@ -9,6 +9,8 @@ import BookService from "./components/bookService/BookService";
 import AddPetTest from "./components/addPet/AddPetTest";
 import Logout from "./components/Logout";
 import ImageCrop from "./components/imageCrop/ImageCrop";
+import PetGrooming from "./components/petServices/PetGrooming";
+import PetSitting from "./components/petServices/PetSitting";
 import PersistLogin from "./components/PersistLogin";
 import RequireAuth from "./components/RequireAuth";
 import "./css/Global.css";
@@ -22,9 +24,11 @@ function App() {
     return (
         <Routes>
             <Route path="/" element={<Layout />}>
+                <Route index element={<Home />} />
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
-                <Route path="/" element={<Home />} />
+                <Route path="pet_grooming" element={<PetGrooming />} />
+                <Route path="pet_sitting" element={<PetSitting />} />
 
                 <Route element={<PersistLogin />}>
                     <Route
