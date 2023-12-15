@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import "../css/Register.css";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import { useRegisterMutation } from "../features/auth/authApiSlice";
 
 interface IUserInput {
     username: string;
@@ -17,13 +18,15 @@ const Register = () => {
         formState: { errors },
     } = useForm<IUserInput>();
     const axiosPrivate = useAxiosPrivate();
+    const [registerUser] = useRegisterMutation();
     const navigate = useNavigate();
 
     const onSubmit: SubmitHandler<IUserInput> = async (data) => {
         console.log(data);
 
         try {
-            const response = await axiosPrivate.post("/register", data);
+            // const response = await axiosPrivate.post("/register", data);
+            const response = await registerUser(data).unwrap();
             console.log(response);
             navigate("/login", { replace: true });
         } catch (error) {

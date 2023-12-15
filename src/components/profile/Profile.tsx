@@ -101,14 +101,16 @@ const Profile = () => {
         profile = <p>Loading...</p>;
     } else if (isSuccess) {
         const user = userData.user;
-        const avatarPath = `http://localhost:3500/images/${user?.avatarFileKey}`;
+        const avatarPath = user?.avatarFileKey
+            ? `http://localhost:3500/images/${user?.avatarFileKey}`
+            : userDefaultAvatar;
         console.log(user);
 
         profile = (
             <div className="profileCard">
                 <form className="avatarForm">
                     <img
-                        src={avatarPath || userDefaultAvatar}
+                        src={avatarPath}
                         alt="avatar"
                         className="avatar"
                         onClick={handleImageClick}
