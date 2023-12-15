@@ -1,21 +1,19 @@
-import React, { useContext } from "react";
-import { UserContext } from "../../context/UserProfileContext";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import React, { useState } from "react";
+import {
+    useEditUserMutation,
+    useGetUserQuery,
+} from "../../features/user/userApiSlice";
 
 const EditUser = () => {
-    const {
-        state: { name, username },
-        setName,
-        setUsername,
-    } = useContext(UserContext);
-    const axiosPrivate = useAxiosPrivate();
+    const [name, setName] = useState("");
+    const [username, setUsername] = useState("");
+    const [editUser] = useEditUserMutation();
+    const { data: userData } = useGetUserQuery(null);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const response = await axiosPrivate.put("/profile", {
-                name,
-            });
+            const response = await editUser(name).unwrap();
             console.log(response);
         } catch (error) {
             console.log(error);
@@ -30,7 +28,7 @@ const EditUser = () => {
                 type="text"
                 id="name"
                 autoComplete="off"
-                placeholder="name"
+                placeholder={userData.user.name ?? "name"}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
             />
@@ -42,7 +40,7 @@ const EditUser = () => {
                 type="text"
                 id="username"
                 autoComplete="off"
-                placeholder="username"
+                placeholder={userData.user.username ?? "username"}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
             />

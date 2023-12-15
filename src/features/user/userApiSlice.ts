@@ -10,7 +10,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
             query: (name) => ({
                 url: "/profile",
                 method: "PUT",
-                body: name,
+                body: { name },
             }),
             invalidatesTags: ["User"],
         }),
