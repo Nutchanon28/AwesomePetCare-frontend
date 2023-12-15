@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding: 3rem;
+    padding: 3rem 3rem 1rem 3rem;
 }
 
 .petGrooming img {
@@ -27,4 +27,27 @@
     .petGroomingDescription {
         width: 100%;
     }
+}
+
+.petGroomingPricing {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0 3rem;
+}
+
+table {
+    width: 80%;
+    align-self: center;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+td {
+    padding-left: 1rem;
 }
