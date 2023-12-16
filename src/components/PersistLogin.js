@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import useRefreshToken from "../hooks/useRefreshToken";
 // import useAuth from "../hooks/useAuth";
-import { useSelector } from "react-redux";
-import { selectCurrentToken } from "../features/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCurrentToken, logOut } from "../features/auth/authSlice";
 
 const PersistLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
     const refresh = useRefreshToken();
     // const { auth, persist } = useAuth();
     const accessToken = useSelector(selectCurrentToken);
+    const dispatch = useDispatch()
 
     useEffect(() => {
         let isMounted = true;
@@ -19,6 +20,7 @@ const PersistLogin = () => {
                 await refresh();
             } catch (error) {
                 console.log(error);
+                dispatch(logOut());
             } finally {
                 isMounted && setIsLoading(false);
             }
