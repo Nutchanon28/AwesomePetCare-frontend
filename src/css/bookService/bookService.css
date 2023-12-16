@@ -12,7 +12,6 @@
     align-items: center;
 }
 
-/* flex 1 split each component nicely, but it leave no space between them. how to fix this? */
 .serviceStep {
     padding: 1rem;
     margin: 2rem 0;
@@ -22,11 +21,23 @@
     flex: 4;
 }
 
+.serviceStepSelected {
+    padding: 1rem;
+    margin: 2rem 0;
+    border: 1px #333 solid;
+    border-radius: 25px;
+    text-align: center;
+    flex: 4;
+    background-color: #abdbe3;
+}
+
 .nextArrow {
     flex: 1;
 }
 
-.serviceStep:not(:last-child), .nextArrow {
+.serviceStep:not(:last-child),
+.serviceStepSelected:not(:last-child),
+.nextArrow {
     margin-right: 10px;
 }
 

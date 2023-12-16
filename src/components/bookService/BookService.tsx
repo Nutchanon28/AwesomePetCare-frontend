@@ -9,59 +9,25 @@ import {
     selectCurrentService,
     setStep,
 } from "../../features/services/servicesSlice";
+import ServiceProcess from "./ServiceProcess";
+import ServiceBtn from "./ServiceBtn";
+import PetGroomingService from "./petGrooming/PetGroomingService";
 
 const BookService = () => {
     const params = useParams();
     const [startDate, setStartDate] = useState(new Date());
     const services = useSelector(selectCurrentService);
     const dispatch = useDispatch();
+    console.log(services);
 
     return (
         <div className="bookService">
             <h1>Dog Grooming</h1>
-            <div className="serviceProcess">
-                <div className="serviceStep">Service</div>
-                <FaAngleDoubleRight className="nextArrow" />
-                <div className="serviceStep">Pet</div>
-                <FaAngleDoubleRight className="nextArrow" />
-                <div className="serviceStep">Date & Time</div>
-                <FaAngleDoubleRight className="nextArrow" />
-                <div className="serviceStep">Summary</div>
-            </div>
-            <p>Costs: 69$</p>
-            <p>Select Service</p>
-            <div className="selectService">
-                <div className="serviceCard">
-                    <h2>Basic Service</h2>
-                    <ul>
-                        <li>a bath</li>
-                        <li>trimmed nails</li>
-                        <li>cleaned ears</li>
-                    </ul>
-                </div>
-                <div className="serviceCard">
-                    <h2>Full Service</h2>
-                    <ul>
-                        <li>a bath with towel and hair drying</li>
-                        <li>teeth brushing</li>
-                        <li>nail trimming</li>
-                        <li>eye and ear cleaning</li>
-                        <li>a brush out</li>
-                        <li>
-                            a haircut based upon your dog&#39;s breed standard
-                            or your individual style choice
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div className="serviceBtn">
-                <button onClick={() => dispatch(setStep({ mode: "back" }))}>
-                    back
-                </button>
-                <button onClick={() => dispatch(setStep({ mode: "next" }))}>
-                    next
-                </button>
-            </div>
+            <ServiceProcess />
+            <p>Costs: {services.price}$</p>
+            {/* <Outlet /> */}
+            <PetGroomingService />
+            <ServiceBtn />
             {/* <p>Select your pet(s):</p>
             <ul>
                 <li>pet1</li>
