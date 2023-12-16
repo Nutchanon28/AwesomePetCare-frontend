@@ -4,10 +4,17 @@ import "react-datepicker/dist/react-datepicker.css";
 import "../../css/bookService/bookService.css";
 import { useParams } from "react-router-dom";
 import { FaAngleDoubleRight } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    selectCurrentService,
+    setStep,
+} from "../../features/services/servicesSlice";
 
 const BookService = () => {
     const params = useParams();
     const [startDate, setStartDate] = useState(new Date());
+    const services = useSelector(selectCurrentService);
+    const dispatch = useDispatch();
 
     return (
         <div className="bookService">
@@ -47,7 +54,14 @@ const BookService = () => {
                     </ul>
                 </div>
             </div>
-            <button>next</button>
+            <div className="serviceBtn">
+                <button onClick={() => dispatch(setStep({ mode: "back" }))}>
+                    back
+                </button>
+                <button onClick={() => dispatch(setStep({ mode: "next" }))}>
+                    next
+                </button>
+            </div>
             {/* <p>Select your pet(s):</p>
             <ul>
                 <li>pet1</li>

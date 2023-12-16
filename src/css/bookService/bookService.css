@@ -56,8 +56,9 @@
     align-self: flex-start;
 }
 
-.bookService button{
-    width: 10%;
-    align-self: flex-end;
-    margin-top: 2rem;
+.serviceBtn {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin: 2rem 0;
 }
