@@ -1,8 +1,11 @@
 import React from "react";
 import dogGroomingPhoto from "../../images/dog-grooming.jpeg";
 import "../../css/petServices/PetGrooming.css";
+import { useNavigate } from "react-router-dom";
 
 const PetGrooming = () => {
+    const navigate = useNavigate();
+
     return (
         <>
             <div className="petGrooming">
@@ -31,7 +34,7 @@ const PetGrooming = () => {
                         stress-free and enjoyable grooming experience every time
                         they visit Pampered Paws Paradise.
                     </p>
-                    <button>Book</button>
+                    <button onClick={() => navigate("/book_service/pet_grooming")}>Book</button>
                 </div>
             </div>
             <div className="petGroomingPricing">

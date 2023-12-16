@@ -54,7 +54,7 @@ function App() {
                     <Route
                         element={<RequireAuth allowedRoles={[ROLES.User]} />}
                     >
-                        <Route path="/book_service" element={<BookService />} />
+                        <Route path="/book_service/:service" element={<BookService />} />
                     </Route>
                     <Route
                         element={<RequireAuth allowedRoles={[ROLES.User]} />}

@@ -1,0 +1,63 @@
+.bookService {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    align-self: center;
+    margin-top: 2rem;
+}
+
+.serviceProcess {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+/* flex 1 split each component nicely, but it leave no space between them. how to fix this? */
+.serviceStep {
+    padding: 1rem;
+    margin: 2rem 0;
+    border: 1px #333 solid;
+    border-radius: 25px;
+    text-align: center;
+    flex: 4;
+}
+
+.nextArrow {
+    flex: 1;
+}
+
+.serviceStep:not(:last-child), .nextArrow {
+    margin-right: 10px;
+}
+
+.selectService {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.serviceCard {
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+    align-items: center;
+    padding: 1rem;
+    border: 1px #333 solid;
+    border-radius: 25px;
+}
+
+.serviceCard :hover {
+    cursor: pointer;
+}
+
+.serviceCard ul {
+    width: 100%;
+    align-self: flex-start;
+}
+
+.bookService button{
+    width: 10%;
+    align-self: flex-end;
+    margin-top: 2rem;
+}
