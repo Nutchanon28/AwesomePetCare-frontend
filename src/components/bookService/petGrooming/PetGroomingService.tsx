@@ -1,12 +1,19 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { setTier } from "../../../features/services/servicesSlice";
 
 const PetGroomingService = () => {
+    const dispatch = useDispatch();
+
     return (
         <>
-        {/* Process of this service */}
+            {/* Process of this service */}
             <p>Select Service</p>
             <div className="selectService">
-                <div className="serviceCard">
+                <div
+                    className="serviceCard"
+                    onClick={() => dispatch(setTier("Basic"))}
+                >
                     <h2>Basic Service</h2>
                     <ul>
                         <li>a bath</li>
@@ -14,7 +21,10 @@ const PetGroomingService = () => {
                         <li>cleaned ears</li>
                     </ul>
                 </div>
-                <div className="serviceCard">
+                <div
+                    className="serviceCard"
+                    onClick={() => dispatch(setTier("Full"))}
+                >
                     <h2>Full Service</h2>
                     <ul>
                         <li>a bath with towel and hair drying</li>

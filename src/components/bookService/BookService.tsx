@@ -9,6 +9,7 @@ import ServiceProcess from "./ServiceProcess";
 import ServiceBtn from "./ServiceBtn";
 import PetGroomingService from "./petGrooming/PetGroomingService";
 import SelectPetList from "./SelectPetList";
+import SelectDatetime from "./SelectDatetime";
 
 const BookService = () => {
     const services = useSelector(selectCurrentService);
@@ -24,7 +25,7 @@ const BookService = () => {
             mainContent = <SelectPetList />;
             break;
         case 2:
-            mainContent = <PetGroomingService />;
+            mainContent = <SelectDatetime />;
             break;
         case 3:
             mainContent = <SelectPetList />;
@@ -39,13 +40,6 @@ const BookService = () => {
             {/* <Outlet /> */}
             {mainContent}
             <ServiceBtn />
-            {/* <p>Pick date and time:</p>
-            <DatePicker
-                selected={startDate}
-                onChange={(date) => setStartDate(date || new Date())}
-                showTimeSelect
-                dateFormat="Pp"
-            /> */}
             {/* <p>Costs:</p> */}
             {/* for each pet */}
             {/* <ul>

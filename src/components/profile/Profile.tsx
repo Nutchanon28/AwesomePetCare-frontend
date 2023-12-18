@@ -153,6 +153,7 @@ const Profile = () => {
             });
         }
     }
+    console.log("profile is ", profile);
 
     return (
         <>
