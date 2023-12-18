@@ -77,6 +77,6 @@ export const selectCurrentService = (state: StoreState) => state.services;
 
 export const selectCurrentPrice = (state: StoreState) =>
     Object.entries(state.services.price).reduce(
-        (prev, price) => prev + parseInt(price[1]),
+        (prev, price) => prev + price[1],
         0
     );

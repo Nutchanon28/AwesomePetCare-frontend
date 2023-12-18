@@ -17,24 +17,26 @@ const ServiceBtn = () => {
                 return services.pets.length === 0;
             case 2:
                 return services.time === null;
-            default:
         }
     };
 
     return (
         <div className="serviceBtn">
-            <button
-                onClick={() => dispatch(setStep({ mode: "back" }))}
-                disabled={services.step <= 0}
-            >
-                back
-            </button>
-            <button
-                onClick={() => dispatch(setStep({ mode: "next" }))}
-                disabled={disableNext()}
-            >
-                next
-            </button>
+            {services.step > 0 ? (
+                <button onClick={() => dispatch(setStep({ mode: "back" }))}>
+                    back
+                </button>
+            ) : (
+                <div></div>
+            )}
+            {services.step < 3 && (
+                <button
+                    onClick={() => dispatch(setStep({ mode: "next" }))}
+                    disabled={disableNext()}
+                >
+                    next
+                </button>
+            )}
         </div>
     );
 };

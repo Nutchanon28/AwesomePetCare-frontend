@@ -73,3 +73,24 @@
     justify-content: space-between;
     margin: 2rem 0;
 }
+
+.feeAndCost {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.feeSeperationLine {
+    border: 0.05rem solid #333;
+    width: 100%;
+    margin: 0 auto;
+    flex-shrink: 0;
+    margin: 1rem 0;
+}
+
+.confirmBtnContainer {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}

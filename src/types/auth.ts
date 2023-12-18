@@ -10,6 +10,10 @@ interface Pet {
     description?: string;
 }
 
+type Price = {
+    [key: string]: number;
+};
+
 export interface StoreState {
     auth: {
         user: string | null; // Replace YourUserType with the actual type of your user object
@@ -21,6 +25,6 @@ export interface StoreState {
         tier: string | null;
         pets: Pet[];
         time: Date | null;
-        price: string[];
+        price: Price;
     };
 }
