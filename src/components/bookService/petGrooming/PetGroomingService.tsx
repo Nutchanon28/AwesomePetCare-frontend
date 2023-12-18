@@ -12,7 +12,9 @@ const PetGroomingService = () => {
             <div className="selectService">
                 <div
                     className="serviceCard"
-                    onClick={() => dispatch(setTier("Basic"))}
+                    onClick={() => {
+                        dispatch(setTier({ tier: "Basic", price: 25 }));
+                    }}
                 >
                     <h2>Basic Service</h2>
                     <ul>
@@ -23,7 +25,9 @@ const PetGroomingService = () => {
                 </div>
                 <div
                     className="serviceCard"
-                    onClick={() => dispatch(setTier("Full"))}
+                    onClick={() => {
+                        dispatch(setTier({ tier: "Full", price: 40 }));
+                    }}
                 >
                     <h2>Full Service</h2>
                     <ul>

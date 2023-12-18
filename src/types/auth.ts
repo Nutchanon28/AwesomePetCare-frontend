@@ -21,6 +21,6 @@ export interface StoreState {
         tier: string | null;
         pets: Pet[];
         time: Date | null;
-        price: number;
+        price: string[];
     };
 }

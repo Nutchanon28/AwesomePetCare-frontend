@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import PetList from "../profile/PetList";
-import PetDetail from "../profile/PetDetail";
 import { useDispatch, useSelector } from "react-redux";
 import {
     addPet,
@@ -39,7 +38,9 @@ const SelectPetList = () => {
                         <div className="petCrud">
                             <FaPlus
                                 style={{ color: "#333" }}
-                                onClick={() => dispatch(addPet(pet))}
+                                onClick={() =>
+                                    dispatch(addPet({ pet, price: 20 }))
+                                }
                             />
                             {isPetFound(pet._id) && (
                                 <FaMinus

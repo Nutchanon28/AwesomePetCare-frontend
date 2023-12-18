@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../css/bookService/bookService.css";
 import { useSelector } from "react-redux";
-import { selectCurrentService } from "../../features/services/servicesSlice";
+import { selectCurrentPrice, selectCurrentService } from "../../features/services/servicesSlice";
 import ServiceProcess from "./ServiceProcess";
 import ServiceBtn from "./ServiceBtn";
 import PetGroomingService from "./petGrooming/PetGroomingService";
@@ -11,6 +11,7 @@ import SelectDatetime from "./SelectDatetime";
 
 const BookService = () => {
     const services = useSelector(selectCurrentService);
+    const price = useSelector(selectCurrentPrice)
     console.log(services);
 
     let mainContent;
@@ -35,7 +36,7 @@ const BookService = () => {
         <div className="bookService">
             <h1>Dog Grooming</h1>
             <ServiceProcess />
-            <p>Costs: {services.price}$</p>
+            <p>Costs: {price}$</p>
             {/* <Outlet /> */}
             {mainContent}
             <ServiceBtn />

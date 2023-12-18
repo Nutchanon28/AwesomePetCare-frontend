@@ -2,12 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 // TODO: change this file name (auth to store)
 import { StoreState } from "../../types/auth";
 
+type Price = {
+    [key: string]: number;
+};
+
 interface ServiceState {
     step: number;
     tier: string | null;
     pets: Pet[];
     time: Date | null;
-    price: number;
+    price: Price;
 }
 
 interface Pet {
@@ -30,7 +34,7 @@ const servicesSlice = createSlice({
         tier: null,
         pets: [],
         time: null,
-        price: 0,
+        price: {},
     } as ServiceState,
     reducers: {
         setStep: (state, action) => {
@@ -42,31 +46,37 @@ const servicesSlice = createSlice({
                 : state.step - 1;
         },
         setTier: (state, action) => {
-            const tier = action.payload;
+            const { tier, price } = action.payload;
             state.tier = tier;
+            state.price = { ...state.price, tier: price };
         },
         addPet: (state, action) => {
-            const pet = action.payload;
+            const { pet, price } = action.payload;
             state.pets.push(pet);
+            state.price = { ...state.price, [pet._id]: price };
         },
         removePet: (state, action) => {
             const id = action.payload;
-            state.pets = [...state.pets].filter(pet => pet._id !== id);
+            state.pets = state.pets.filter((pet) => pet._id !== id);
+            const { [id]: _, ...newPrice } = state.price as Price;
+            state.price = newPrice;
         },
         setTime: (state, action) => {
             const time = action.payload;
             state.time = time;
         },
-        setPrice: (state, action) => {
-            const { price, mode } = action.payload;
-            state.price =
-                mode === "increase" ? state.price + price : state.price - price;
-        },
     },
 });
 
-export const { setStep, setTier, addPet, removePet, setTime, setPrice } = servicesSlice.actions;
+export const { setStep, setTier, addPet, removePet, setTime } =
+    servicesSlice.actions;
 
 export default servicesSlice.reducer;
 
 export const selectCurrentService = (state: StoreState) => state.services;
+
+export const selectCurrentPrice = (state: StoreState) =>
+    Object.entries(state.services.price).reduce(
+        (prev, price) => prev + parseInt(price[1]),
+        0
+    );
