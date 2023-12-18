@@ -6,7 +6,7 @@ interface ServiceState {
     step: number;
     tier: string | null;
     pets: Pet[];
-    time: string | null;
+    time: Date | null;
     price: number;
 }
 

@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../css/bookService/bookService.css";
 import { useSelector } from "react-redux";
-import {
-    selectCurrentService,
-} from "../../features/services/servicesSlice";
+import { selectCurrentService } from "../../features/services/servicesSlice";
 import ServiceProcess from "./ServiceProcess";
 import ServiceBtn from "./ServiceBtn";
 import PetGroomingService from "./petGrooming/PetGroomingService";
@@ -30,6 +28,7 @@ const BookService = () => {
         case 3:
             mainContent = <SelectPetList />;
             break;
+        default:
     }
 
     return (

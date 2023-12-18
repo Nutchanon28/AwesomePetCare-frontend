@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import DatePicker from "react-datepicker";
 import { FaCalendar } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    selectCurrentService,
+    setTime,
+} from "../../features/services/servicesSlice";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { addMonths, getDay, setHours, setMinutes } from "date-fns";
 
 const SelectDatetime = () => {
-    const [startDate, setStartDate] = useState(
-        setHours(setMinutes(new Date(), 0), 8)
-    );
-    console.log(startDate);
+    const services = useSelector(selectCurrentService);
+    const dispatch = useDispatch();
+    // const [startDate, setStartDate] = useState<Date | null>(null);
+    // console.log(startDate);
 
     const isNotWorkDay = (date: Date) => {
         const day = getDay(date);
@@ -20,10 +25,9 @@ const SelectDatetime = () => {
         <>
             <p>Pick date and time:</p>
             <DatePicker
-                selected={startDate}
-                onChange={(date: Date) =>
-                    setStartDate(date)
-                }
+                placeholderText="Pick a date and time"
+                selected={services.time}
+                onChange={(date) => dispatch(setTime(date))}
                 showIcon
                 icon={<FaCalendar />}
                 filterDate={isNotWorkDay}
@@ -32,13 +36,19 @@ const SelectDatetime = () => {
                 showTimeSelect
                 dateFormat="Pp"
                 // customTimeInput={<TimeInput />}
-                minTime={setHours(setMinutes(startDate, 0), 8)}
-                maxTime={setHours(setMinutes(startDate, 0), 16)}
+                minTime={setHours(
+                    setMinutes(services.time || new Date(), 0),
+                    8
+                )}
+                maxTime={setHours(
+                    setMinutes(services.time || new Date(), 0),
+                    16
+                )}
                 injectTimes={[
-                    setHours(setMinutes(startDate, 0), 8),
-                    setHours(setMinutes(startDate, 0), 10),
-                    setHours(setMinutes(startDate, 0), 12),
-                    setHours(setMinutes(startDate, 0), 14),
+                    setHours(setMinutes(services.time || new Date(), 0), 8),
+                    setHours(setMinutes(services.time || new Date(), 0), 10),
+                    setHours(setMinutes(services.time || new Date(), 0), 12),
+                    setHours(setMinutes(services.time || new Date(), 0), 14),
                 ]}
                 timeIntervals={2 * 60}
                 onKeyDown={(e) => {
@@ -47,8 +57,8 @@ const SelectDatetime = () => {
             />
             <p>
                 Dog grooming services are avaliable Monday to Saturday from
-                08:00 to 16:00. You can make appointments in advance with
-                the maximum number of three months in advance. The amount of time it
+                08:00 to 16:00. You can make appointments in advance with the
+                maximum number of three months in advance. The amount of time it
                 takes to groom a dog depends on several factors, including the
                 breed, the length and type of coat, the dog&#39;s size and the
                 level of matting or tangles.
