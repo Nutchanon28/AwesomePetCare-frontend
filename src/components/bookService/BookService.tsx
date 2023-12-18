@@ -1,24 +1,35 @@
 import React, { useState } from "react";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../css/bookService/bookService.css";
-import { useParams } from "react-router-dom";
-import { FaAngleDoubleRight } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
     selectCurrentService,
-    setStep,
 } from "../../features/services/servicesSlice";
 import ServiceProcess from "./ServiceProcess";
 import ServiceBtn from "./ServiceBtn";
 import PetGroomingService from "./petGrooming/PetGroomingService";
+import SelectPetList from "./SelectPetList";
 
 const BookService = () => {
-    const params = useParams();
-    const [startDate, setStartDate] = useState(new Date());
     const services = useSelector(selectCurrentService);
-    const dispatch = useDispatch();
     console.log(services);
+
+    let mainContent;
+
+    switch (services.step) {
+        case 0:
+            mainContent = <PetGroomingService />;
+            break;
+        case 1:
+            mainContent = <SelectPetList />;
+            break;
+        case 2:
+            mainContent = <PetGroomingService />;
+            break;
+        case 3:
+            mainContent = <SelectPetList />;
+            break;
+    }
 
     return (
         <div className="bookService">
@@ -26,13 +37,9 @@ const BookService = () => {
             <ServiceProcess />
             <p>Costs: {services.price}$</p>
             {/* <Outlet /> */}
-            <PetGroomingService />
+            {mainContent}
             <ServiceBtn />
-            {/* <p>Select your pet(s):</p>
-            <ul>
-                <li>pet1</li>
-            </ul>
-            <p>Pick date and time:</p>
+            {/* <p>Pick date and time:</p>
             <DatePicker
                 selected={startDate}
                 onChange={(date) => setStartDate(date || new Date())}

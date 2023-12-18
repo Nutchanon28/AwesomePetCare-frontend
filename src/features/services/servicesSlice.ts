@@ -45,9 +45,13 @@ const servicesSlice = createSlice({
             const tier = action.payload;
             state.tier = tier;
         },
-        setPets: (state, action) => {
-            const pets = action.payload;
-            state.pets = [...pets];
+        addPet: (state, action) => {
+            const pet = action.payload;
+            state.pets.push(pet);
+        },
+        removePet: (state, action) => {
+            const id = action.payload;
+            state.pets = [...state.pets].filter(pet => pet._id !== id);
         },
         setTime: (state, action) => {
             const time = action.payload;
@@ -61,7 +65,7 @@ const servicesSlice = createSlice({
     },
 });
 
-export const { setStep, setTier, setPets, setTime, setPrice } = servicesSlice.actions;
+export const { setStep, setTier, addPet, removePet, setTime, setPrice } = servicesSlice.actions;
 
 export default servicesSlice.reducer;
 
