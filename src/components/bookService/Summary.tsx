@@ -4,10 +4,22 @@ import {
     selectCurrentPrice,
     selectCurrentService,
 } from "../../features/services/servicesSlice";
+import { useCheckoutMutation } from "../../features/services/servicesApiSlice";
 
 const Summary = () => {
     const services = useSelector(selectCurrentService);
     const price = useSelector(selectCurrentPrice);
+    const [checkout] = useCheckoutMutation();
+
+    const onCheckout = async () => {
+        try {
+            const response = await checkout(services).unwrap();
+            console.log(response);
+            window.location = response.url;
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const costsList = (
         <>
@@ -45,7 +57,7 @@ const Summary = () => {
             </p>
             {costsList}
             <div className="confirmBtnContainer">
-                <button>Confirm Payment</button>
+                <button onClick={onCheckout}>Checkout</button>
             </div>
         </div>
     );
