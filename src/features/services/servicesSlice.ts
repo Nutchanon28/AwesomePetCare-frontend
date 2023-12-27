@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 // TODO: change this file name (auth to store)
+// TODO: clear state when logout
 import { StoreState } from "../../types/auth";
 
 type Price = {

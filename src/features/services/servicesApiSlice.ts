@@ -5,6 +5,7 @@ type Price = {
 };
 
 interface ServiceState {
+    service: string;
     step: number;
     tier: string | null;
     pets: Pet[];
@@ -28,7 +29,7 @@ export const servicesApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         checkout: builder.mutation({
             query: (service: ServiceState) => ({
-                url: "/create-checkout-session",
+                url: "/stripe",
                 method: "POST",
                 body: service,
             }),

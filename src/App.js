@@ -13,6 +13,7 @@ import PetGrooming from "./components/petServices/PetGrooming";
 import PetSitting from "./components/petServices/PetSitting";
 import PersistLogin from "./components/PersistLogin";
 import RequireAuth from "./components/RequireAuth";
+import TicketTable from "./components/ticket/TicketTable";
 import "./css/Global.css";
 
 const ROLES = {
@@ -49,12 +50,20 @@ function App() {
                     <Route
                         element={<RequireAuth allowedRoles={[ROLES.User]} />}
                     >
+                        <Route path="/tickets" element={<TicketTable />} />
+                    </Route>
+                    <Route
+                        element={<RequireAuth allowedRoles={[ROLES.User]} />}
+                    >
                         <Route path="/logout" element={<Logout />} />
                     </Route>
                     <Route
                         element={<RequireAuth allowedRoles={[ROLES.User]} />}
                     >
-                        <Route path="/book_service/:service" element={<BookService />} />
+                        <Route
+                            path="/book_service/:service"
+                            element={<BookService />}
+                        />
                     </Route>
                     <Route
                         element={<RequireAuth allowedRoles={[ROLES.User]} />}

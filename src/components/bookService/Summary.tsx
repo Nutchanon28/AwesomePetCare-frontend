@@ -13,7 +13,10 @@ const Summary = () => {
 
     const onCheckout = async () => {
         try {
-            const response = await checkout(services).unwrap();
+            const response = await checkout({
+                service: "dog grooming",
+                ...services,
+            }).unwrap();
             console.log(response);
             window.location = response.url;
         } catch (error) {

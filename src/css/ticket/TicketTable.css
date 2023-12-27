@@ -1,0 +1,36 @@
+.ticketTable {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 4rem;
+}
+
+.ticketTable table {
+    width: 90%;
+    align-self: center;
+}
+
+.ticketTable table,
+.ticketTable th,
+.ticketTable td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.ticketTable th,
+.ticketTable td {
+    overflow-wrap: anywhere;
+}
+
+.ticketTable td {
+    padding: 1rem;
+}
+
+.cancelBtn {
+    background-color: #f44336;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+}

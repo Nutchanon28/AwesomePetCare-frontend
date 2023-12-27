@@ -48,6 +48,9 @@ const Navbar = () => {
                                 <Link to="/profile">profile</Link>
                             </li>
                             <li>
+                                <Link to="/tickets">tickets</Link>
+                            </li>
+                            <li>
                                 <Link to="/login" onClick={handleLogout}>
                                     logout
                                 </Link>
@@ -68,6 +71,7 @@ const Navbar = () => {
                         {(persist || accessToken) && (
                             <>
                                 <Link to="/profile">profile</Link>
+                                <Link to="/tickets">tickets</Link>
                                 {/* <Link to="/book_service">services</Link> */}
                                 <Link to="/login" onClick={handleLogout}>
                                     logout

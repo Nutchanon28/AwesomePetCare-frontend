@@ -36,18 +36,18 @@
     padding: 0 3rem;
 }
 
-table {
+.petGroomingPricing table {
     width: 80%;
     align-self: center;
 }
 
-table,
-th,
-td {
+.petGroomingPricing table,
+.petGroomingPricing th,
+.petGroomingPricing td {
     border: 1px solid black;
     border-collapse: collapse;
 }
 
-td {
+.petGroomingPricing td {
     padding-left: 1rem;
 }

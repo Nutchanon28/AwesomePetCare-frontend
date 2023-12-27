@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+// TODO: false logout?
 
 const Logout = () => {
     useEffect(() => {
