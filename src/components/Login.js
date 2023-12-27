@@ -1,15 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useLoginMutation } from "../features/auth/authApiSlice";
-// import axios from "../api/axios";
-// import useAuth from "../hooks/useAuth";
 import "../css/Login.css";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../features/auth/authSlice";
 
 const Login = () => {
-    // const { setAuth, persist, setPersist } = useAuth();
-
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
@@ -39,9 +35,6 @@ const Login = () => {
             console.log(response);
             dispatch(setCredentials({ ...response, user: username }));
 
-            /* Can I navigate then window.location.reload() there only once after this? */
-            localStorage.setItem("persist", "true");
-
             setUsername("");
             setPassword("");
             navigate(from, { replace: true });
@@ -58,14 +51,6 @@ const Login = () => {
             errorRef.current?.focus();
         }
     };
-
-    // const togglePersist = () => {
-    //     setPersist((prev) => !prev);
-    // };
-
-    // useEffect(() => {
-    //     localStorage.setItem("persist", persist);
-    // }, [persist]);
 
     return (
         <section className="loginSection">

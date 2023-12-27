@@ -5,11 +5,23 @@ import "../../css/ticket/TicketTable.css";
 interface ITicket {
     _id: string;
     userId: string;
-    petsId: string[];
+    petsId: Pet[];
     service: string;
     datetime: Date;
     price: number;
     status: string;
+}
+
+interface Pet {
+    _id: string;
+    ownerId: string;
+    name: string;
+    type: string;
+    breed: string;
+    foodAllergies: string;
+    congenitalDisease: string;
+    image: string;
+    description?: string;
 }
 
 const TicketTable = () => {
@@ -44,8 +56,15 @@ const TicketTable = () => {
                                     ).toLocaleTimeString()}
                                 </td>
                                 <td>{ticket.service}</td>
-                                {/* <td>{ticket.petsId}</td> */}
-                                <td>use populate for this</td>
+                                <td>
+                                    {ticket.petsId
+                                        .reduce(
+                                            (prev, pet) =>
+                                                prev + `${pet.name}, `,
+                                            ""
+                                        )
+                                        .slice(0, -2)}
+                                </td>
                                 <td style={{ textAlign: "center" }}>
                                     <button className="cancelBtn">
                                         cancel

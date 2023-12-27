@@ -14,6 +14,7 @@ import PetSitting from "./components/petServices/PetSitting";
 import PersistLogin from "./components/PersistLogin";
 import RequireAuth from "./components/RequireAuth";
 import TicketTable from "./components/ticket/TicketTable";
+import Unauthorized from "./components/Unauthorized";
 import "./css/Global.css";
 
 const ROLES = {
@@ -30,6 +31,7 @@ function App() {
                 <Route path="register" element={<Register />} />
                 <Route path="pet_grooming" element={<PetGrooming />} />
                 <Route path="pet_sitting" element={<PetSitting />} />
+                <Route path="unauthorized" element={<Unauthorized />} />
 
                 <Route element={<PersistLogin />}>
                     <Route
