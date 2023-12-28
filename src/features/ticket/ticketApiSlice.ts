@@ -1,6 +1,6 @@
 import { apiSlice } from "../../api/apiSlice";
 
-export const servicesApiSlice = apiSlice.injectEndpoints({
+export const ticketApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getTickets: builder.query({
             query: () => "/ticket",
@@ -9,4 +9,4 @@ export const servicesApiSlice = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useGetTicketsQuery } = servicesApiSlice;
+export const { useGetTicketsQuery } = ticketApiSlice;

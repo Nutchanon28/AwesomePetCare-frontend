@@ -15,6 +15,7 @@ import PersistLogin from "./components/PersistLogin";
 import RequireAuth from "./components/RequireAuth";
 import TicketTable from "./components/ticket/TicketTable";
 import Unauthorized from "./components/Unauthorized";
+import UserList from "./components/admin/UserList";
 import "./css/Global.css";
 
 const ROLES = {
@@ -66,6 +67,11 @@ function App() {
                             path="/book_service/:service"
                             element={<BookService />}
                         />
+                    </Route>
+                    <Route
+                        element={<RequireAuth allowedRoles={[ROLES.Admin]} />}
+                    >
+                        <Route path="/users" element={<UserList />} />
                     </Route>
                     <Route
                         element={<RequireAuth allowedRoles={[ROLES.User]} />}

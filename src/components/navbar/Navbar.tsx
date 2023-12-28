@@ -77,7 +77,7 @@ const Navbar = () => {
                     {(navbarFor === "5150" || adminInMemory) && (
                         <>
                             <li>
-                                <Link to="/unauthorized">users</Link>
+                                <Link to="/users">users</Link>
                             </li>
                         </>
                     )}
@@ -114,7 +114,7 @@ const Navbar = () => {
                         {(navbarFor === "5150" || adminInMemory) && (
                             <>
                                 <li>
-                                    <Link to="/unauthorized">users</Link>
+                                    <Link to="/users">users</Link>
                                 </li>
                             </>
                         )}
