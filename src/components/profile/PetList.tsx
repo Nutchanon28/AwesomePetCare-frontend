@@ -1,7 +1,8 @@
 import React from "react";
 import Pet from "./Pet";
 import "../../css/profile/PetList.css";
-import { useGetPetsQuery } from "../../features/pets/petsApiSlice";
+import { useGetUserQuery } from "../../features/user/userApiSlice";
+// import { useGetPetsQuery } from "../../features/pets/petsApiSlice";
 
 interface IPet {
     _id: string;
@@ -22,12 +23,12 @@ interface PetListProps {
 
 const PetList = ({ setSelectedPet }: PetListProps) => {
     const {
-        data: pets = [],
+        data: user,
         isLoading,
         isError,
         error,
         isSuccess,
-    } = useGetPetsQuery(null);
+    } = useGetUserQuery(null);
 
     let content;
     if (isLoading) {
@@ -35,7 +36,7 @@ const PetList = ({ setSelectedPet }: PetListProps) => {
     } else if (isSuccess) {
         content = (
             <ul className="petList">
-                {pets?.map((pet) => {
+                {user.pets?.map((pet) => {
                     return (
                         <Pet
                             key={pet.name}

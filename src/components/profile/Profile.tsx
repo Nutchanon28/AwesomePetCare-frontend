@@ -12,6 +12,19 @@ import {
     useGetUserQuery,
 } from "../../features/user/userApiSlice";
 
+// interface User {
+//     _id: string;
+//     username: string;
+//     roles: Role[];
+//     name?: string;
+//     pets: IPet[];
+//     avatarFileKey?: string;
+// }
+
+// interface Role {
+//     User: 2001;
+//     Admin?: 5150;
+// }
 interface IPet {
     _id: string;
     ownerId: string;
@@ -27,7 +40,7 @@ interface IPet {
 // TODO: If the accessToken expires, and the user return to this page. The components will be broken?
 const Profile = () => {
     const {
-        data: userData,
+        data: user,
         isLoading,
         isError,
         error,
@@ -101,7 +114,6 @@ const Profile = () => {
     if (isLoading) {
         profile = <p>Loading...</p>;
     } else if (isSuccess) {
-        const user = userData.user;
         const avatarPath = user?.avatarFileKey
             ? `http://localhost:3500/images/${user?.avatarFileKey}`
             : userDefaultAvatar;

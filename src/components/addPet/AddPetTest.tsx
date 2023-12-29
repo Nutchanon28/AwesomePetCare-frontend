@@ -12,6 +12,7 @@ interface IPetInput {
     congenitalDisease: string;
 }
 
+// TODO: can't add pet when token expire (403 forbidden)
 const AddPetTest = () => {
     const {
         register,

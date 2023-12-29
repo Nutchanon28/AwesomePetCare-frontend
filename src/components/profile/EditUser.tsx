@@ -8,7 +8,7 @@ const EditUser = () => {
     const [name, setName] = useState("");
     const [username, setUsername] = useState("");
     const [editUser] = useEditUserMutation();
-    const { data: userData } = useGetUserQuery(null);
+    const { data: user } = useGetUserQuery(null);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -28,7 +28,7 @@ const EditUser = () => {
                 type="text"
                 id="name"
                 autoComplete="off"
-                placeholder={userData.user.name ?? "name"}
+                placeholder={user?.name ?? "name"}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
             />
@@ -40,7 +40,7 @@ const EditUser = () => {
                 type="text"
                 id="username"
                 autoComplete="off"
-                placeholder={userData.user.username ?? "username"}
+                placeholder={user?.username ?? "username"}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
             />
