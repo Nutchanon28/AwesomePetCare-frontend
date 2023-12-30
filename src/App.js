@@ -16,6 +16,7 @@ import RequireAuth from "./components/RequireAuth";
 import TicketTable from "./components/ticket/TicketTable";
 import Unauthorized from "./components/Unauthorized";
 import UserList from "./components/admin/UserList";
+import UserProfile from "./components/admin/UserProfile";
 import "./css/Global.css";
 
 const ROLES = {
@@ -72,6 +73,7 @@ function App() {
                         element={<RequireAuth allowedRoles={[ROLES.Admin]} />}
                     >
                         <Route path="/users" element={<UserList />} />
+                        <Route path="/users/:username" element={<UserProfile />} />
                     </Route>
                     <Route
                         element={<RequireAuth allowedRoles={[ROLES.User]} />}

@@ -2,19 +2,6 @@ import React from "react";
 import { useGetAllUserQuery } from "../../features/admin/adminApiSlice";
 import "../../css/ticket/TicketTable.css";
 
-interface User {
-    _id: string;
-    username: string;
-    roles: Role[];
-    name?: string;
-    // pets: string,
-}
-
-interface Role {
-    User: 2001;
-    Admin?: 5150;
-}
-
 const UserList = () => {
     const { data, isLoading, isError, error, isSuccess } =
         useGetAllUserQuery(null);
@@ -34,13 +21,21 @@ const UserList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((user: User) => {
+                    {data.map((user) => {
                         return (
                             <tr key={user._id}>
                                 <td>{user.username}</td>
                                 <td>{JSON.stringify(user.roles)}</td>
                                 <td>{user.name}</td>
-                                <td>pets' name</td>
+                                <td>
+                                    {user.pets
+                                        .reduce(
+                                            (prev, pet) =>
+                                                prev + `${pet.name}, `,
+                                            ""
+                                        )
+                                        .slice(0, -2)}
+                                </td>
                             </tr>
                         );
                     })}
