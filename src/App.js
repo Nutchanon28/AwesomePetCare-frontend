@@ -40,50 +40,39 @@ function App() {
                         element={<RequireAuth allowedRoles={[ROLES.User]} />}
                     >
                         <Route path="/profile" element={<Profile />} />
-                    </Route>
-                    <Route
-                        element={<RequireAuth allowedRoles={[ROLES.User]} />}
-                    >
                         <Route path="/add_pet" element={<AddPetTest />} />
-                    </Route>
-                    <Route
-                        element={<RequireAuth allowedRoles={[ROLES.User]} />}
-                    >
                         <Route path="/edit_pet" element={<EditPet />} />
-                    </Route>
-                    <Route
-                        element={<RequireAuth allowedRoles={[ROLES.User]} />}
-                    >
                         <Route path="/tickets" element={<TicketTable />} />
-                    </Route>
-                    <Route
-                        element={<RequireAuth allowedRoles={[ROLES.User]} />}
-                    >
-                        <Route path="/logout" element={<Logout />} />
-                    </Route>
-                    <Route
-                        element={<RequireAuth allowedRoles={[ROLES.User]} />}
-                    >
                         <Route
                             path="/book_service/:service"
                             element={<BookService />}
                         />
-                    </Route>
-                    <Route
-                        element={<RequireAuth allowedRoles={[ROLES.Admin]} />}
-                    >
-                        <Route path="/users" element={<UserList />} />
-                        <Route path="/users/:username" element={<UserProfile />} />
-                    </Route>
-                    <Route
-                        element={<RequireAuth allowedRoles={[ROLES.User]} />}
-                    >
                         <Route
                             path="/crop_photo"
                             element={
                                 <ImageCrop src="https://www.digitalmomblog.com/wp-content/uploads/2020/10/among-us-meme-sus.jpeg" />
                             }
                         />
+                    </Route>
+
+                    <Route
+                        element={<RequireAuth allowedRoles={[ROLES.Admin]} />}
+                    >
+                        <Route path="/users" element={<UserList />} />
+                        <Route
+                            path="/users/:username"
+                            element={<UserProfile />}
+                        />
+                    </Route>
+                    
+                    <Route
+                        element={
+                            <RequireAuth
+                                allowedRoles={[ROLES.User, ROLES.Admin]}
+                            />
+                        }
+                    >
+                        <Route path="/logout" element={<Logout />} />
                     </Route>
                 </Route>
             </Route>
