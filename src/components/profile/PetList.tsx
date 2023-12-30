@@ -17,11 +17,11 @@ interface IPet {
 }
 
 interface PetListProps {
-    // pets: IPet[] | undefined;
+    pets?: IPet[] | null;
     setSelectedPet: React.Dispatch<React.SetStateAction<IPet | null>>;
 }
 
-const PetList = ({ setSelectedPet }: PetListProps) => {
+const PetList = ({ pets, setSelectedPet }: PetListProps) => {
     const {
         data: user,
         isLoading,
@@ -29,6 +29,7 @@ const PetList = ({ setSelectedPet }: PetListProps) => {
         error,
         isSuccess,
     } = useGetUserQuery(null);
+    const petList = pets ? pets : user?.pets ?? [];
 
     let content;
     if (isLoading) {
@@ -36,7 +37,7 @@ const PetList = ({ setSelectedPet }: PetListProps) => {
     } else if (isSuccess) {
         content = (
             <ul className="petList">
-                {user.pets?.map((pet) => {
+                {petList.map((pet) => {
                     return (
                         <Pet
                             key={pet.name}

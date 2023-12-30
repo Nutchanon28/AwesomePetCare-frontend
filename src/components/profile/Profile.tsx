@@ -12,19 +12,6 @@ import {
     useGetUserQuery,
 } from "../../features/user/userApiSlice";
 
-// interface User {
-//     _id: string;
-//     username: string;
-//     roles: Role[];
-//     name?: string;
-//     pets: IPet[];
-//     avatarFileKey?: string;
-// }
-
-// interface Role {
-//     User: 2001;
-//     Admin?: 5150;
-// }
 interface IPet {
     _id: string;
     ownerId: string;
