@@ -79,6 +79,9 @@ const Navbar = () => {
                             <li>
                                 <Link to="/users">users</Link>
                             </li>
+                            <li>
+                                <Link to="/all_ticket">tickets</Link>
+                            </li>
                         </>
                     )}
                     {(navbarFor !== "" || accessToken) && (
@@ -113,9 +116,8 @@ const Navbar = () => {
                         )}
                         {(navbarFor === "5150" || adminInMemory) && (
                             <>
-                                <li>
-                                    <Link to="/users">users</Link>
-                                </li>
+                                <Link to="/users">users</Link>
+                                <Link to="/all_ticket">tickets</Link>
                             </>
                         )}
                         {(navbarFor !== "" || accessToken) && (

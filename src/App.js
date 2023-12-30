@@ -16,6 +16,7 @@ import RequireAuth from "./components/RequireAuth";
 import TicketTable from "./components/ticket/TicketTable";
 import Unauthorized from "./components/Unauthorized";
 import UserList from "./components/admin/UserList";
+import TicketList from "./components/admin/TicketList";
 import UserProfile from "./components/admin/UserProfile";
 import "./css/Global.css";
 
@@ -63,8 +64,9 @@ function App() {
                             path="/users/:username"
                             element={<UserProfile />}
                         />
+                        <Route path="/all_ticket" element={<TicketList />} />
                     </Route>
-                    
+
                     <Route
                         element={
                             <RequireAuth

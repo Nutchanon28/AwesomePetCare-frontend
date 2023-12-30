@@ -25,6 +25,16 @@ interface IPet {
     description?: string;
 }
 
+interface ITicket {
+    _id: string;
+    userId: User;
+    petsId: IPet[];
+    service: string;
+    datetime: Date;
+    price: number;
+    status: string;
+}
+
 export const adminApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getAllUser: builder.query<User[], null>({
@@ -33,7 +43,11 @@ export const adminApiSlice = apiSlice.injectEndpoints({
         getUserByUsername: builder.query<User, string>({
             query: (username) => `/users/${username}`,
         }),
+        getAllTicket: builder.query<ITicket[], null>({
+            query: () => "/ticket/admin",
+            providesTags: ["Tickets"],
+        }),
     }),
 });
 
-export const { useGetAllUserQuery, useGetUserByUsernameQuery } = adminApiSlice;
+export const { useGetAllUserQuery, useGetUserByUsernameQuery, useGetAllTicketQuery } = adminApiSlice;
